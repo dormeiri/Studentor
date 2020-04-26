@@ -22,9 +22,9 @@ def create_app():
 
 
 def register_config(app):
-    app.config['MONGO_URI'] = "mongodb://localhost:27017/db"
-    app.config['MONGO_DBNAME'] = "db"
-    app.config['JWT_SECRET_KEY'] = 'secret'
+    app.config['MONGO_URI'] = 'mongodb://localhost:27017/studentor'
+    app.config['MONGO_DBNAME'] = 'db'
+    app.config['JWT_SECRET_KEY'] = '>e:fjS4kf_zJMEh&Kr5QgpozPQnjmDUrdQF*up5bs(W5Lb*5f+gGZ8(]FrC%TwwQ'
 
 
 def register_extensions(app):

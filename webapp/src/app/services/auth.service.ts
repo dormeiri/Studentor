@@ -19,6 +19,8 @@ export class AuthService {
     .pipe(catchError(this.errorHandler))
   }
 
+  
+
   errorHandler(error: HttpErrorResponse) {
     return Observable.throw(error.message || 'server error.');
   } 

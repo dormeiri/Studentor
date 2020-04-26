@@ -10,7 +10,7 @@ export class LoginRedirectService {
   constructor(private auth: AuthService, private router: Router) {}
   canActivate(): boolean {
     if (localStorage.getItem('access_token')) {
-      this.router.navigateByUrl('/status');
+      this.router.navigateByUrl('/home');
       return false;
     }
     else {

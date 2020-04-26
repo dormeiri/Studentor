@@ -1,11 +1,7 @@
 import datetime
-
-from flask import request, Blueprint, abort
 from marshmallow import ValidationError
-
-from api.models.user import (
-    login_schema, create_user_schema
-)
+from flask import request, Blueprint, abort
+from api.models.user import login_schema, create_user_schema
 from api.auth import (
     authenticate, deauthenticate, refresh_authentication,
     auth_required, auth_refresh_required,
@@ -32,7 +28,7 @@ def post_user():
 
         return ok()
     except ValidationError:
-        return abort(400)
+        abort(400)
 
 
 @auth_blueprint.route('/api/auth/login', methods=['POST'])
@@ -48,7 +44,7 @@ def login():
     except AuthenticationError as e:
         return abort(e.code)
     except ValidationError:
-        return abort(400)
+        abort(400)
 
 
 @auth_blueprint.route('/api/auth/refresh', methods=['POST'])

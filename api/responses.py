@@ -1,5 +1,8 @@
 from flask import jsonify
 
 
-def ok(data=""):
-    return jsonify(data), 200
+def ok(data=None, code=200):
+    return (
+        jsonify(data) if data else "",
+        code
+    )

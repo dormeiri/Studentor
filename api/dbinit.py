@@ -2,7 +2,7 @@ from pymongo import MongoClient, ASCENDING, DESCENDING
 
 
 def get_connection():
-    return MongoClient('mongodb://localhost:27017')
+    return MongoClient('mongodb://localhost:27017/studentor')
 
 
 def initialize(mongo):

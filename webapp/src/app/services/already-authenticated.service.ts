@@ -5,12 +5,12 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class EnsureAuthenticatedService {
+export class AlreadyAuthenticatedService {
 
   constructor(private auth: AuthService, private router: Router) {}
   
   canActivate(): boolean {
-    if (localStorage.getItem('access_token')) {
+    if (!localStorage.getItem('access_token')) {
       return true;
     }
     else {

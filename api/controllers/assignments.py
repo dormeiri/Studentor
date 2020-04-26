@@ -1,15 +1,10 @@
+from marshmallow import ValidationError
 from bson.objectid import ObjectId
 from flask import request, Blueprint, abort
-from marshmallow import ValidationError
-
-from api.models.assignments import (
-    create_assignment_schema
-)
-from api.auth import (
-    get_authenticated_user, auth_required, roles_required
-)
+from api.auth import get_authenticated_user, auth_required, roles_required
 from api.extensions import mongo
 from api.responses import ok
+from api.models.assignments import create_assignment_schema
 
 
 assignments_blueprint = Blueprint('/api/assignments', __name__)
@@ -52,9 +47,7 @@ def post_assignment():
 
         return ok()
     except ValidationError:
-        result = abort(400)
-
-    return result
+        abort(400)
 
 
 @assignments_blueprint.route('/api/assignments/<id>', methods=['DELETE'])
@@ -64,4 +57,4 @@ def delete_user(id):
     if resp.deleted_count:
         return ok()
     else:
-        return abort(404)
+        abort(404)
