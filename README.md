@@ -14,10 +14,10 @@ Feel free to share your needs and ideas for a better studying environment
 
 ### Envrionment variables
 
-| Environment variable | Description |
-| :--- | :--- |
-| STUDENTOR_MONGO_URI | Used to access the MongoDB server |
-| STUDENTOR_JWT_SECRET_KEY | Secret key for JWT |
+| Environment variable | Description | Example |
+| :--- | :--- | :--- |
+| STUDENTOR_MONGO_URI | Used to access the MongoDB server | mongodb://localhost:27017/studentor |
+| STUDENTOR_JWT_SECRET_KEY | Secret key for JWT | secret-key123 |
 
 ### Install dependecies
 
