@@ -1,6 +1,6 @@
 # Studentor (under development)
 
-A tasks management system customized for the student needs. Keep your assignments, exams and gaps handled in a single place. 
+A tasks management system customized for the student needs. Keep your assignments, exams and gaps handled in a single place.
 
 Feel free to share your needs and ideas for a better studying environment
 
@@ -31,6 +31,7 @@ Run terminal in the folder `/webapp` and then run the command `npm install`
 
 ### Run
 
-1. Run MongoDB
+1. Run MongoDB server
+1. In the root folder run `python -m api.dbinit`
 1. In the root folder run `python -m api.main`
 1. In `/webapp` folder run the command `ng serve`

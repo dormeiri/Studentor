@@ -1,8 +1,9 @@
+from os import environ
 from pymongo import MongoClient, ASCENDING, DESCENDING
 
 
 def get_connection():
-    return MongoClient('mongodb://localhost:27017/studentor')
+    return MongoClient(environ['STUDENTOR_MONGO_URI'])
 
 
 def initialize(mongo):
