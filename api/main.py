@@ -1,3 +1,5 @@
+from os import environ
+
 from flask import Flask
 from flask_cors import CORS
 
@@ -22,9 +24,9 @@ def create_app():
 
 
 def register_config(app):
-    app.config['MONGO_URI'] = 'mongodb://localhost:27017/studentor'
+    app.config['MONGO_URI'] = environ['STUDENTOR_MONGO_URI']
     app.config['MONGO_DBNAME'] = 'db'
-    app.config['JWT_SECRET_KEY'] = '>e:fjS4kf_zJMEh&Kr5QgpozPQnjmDUrdQF*up5bs(W5Lb*5f+gGZ8(]FrC%TwwQ'
+    app.config['JWT_SECRET_KEY'] = environ['STUDENTOR_JWT_SECRET_KEY']
 
 
 def register_extensions(app):
