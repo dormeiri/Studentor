@@ -31,7 +31,7 @@ Run terminal in the folder `/webapp` and then run the command `npm install`
 
 ### Run
 
-1. Run MongoDB server
+1. Run MongoDB server with `mongod --dbpath={{mongodb data path}}`
 1. In the root folder run `python -m api.dbinit`
 1. In the root folder run `python -m api.main`
 1. In `/webapp` folder run the command `ng serve`
