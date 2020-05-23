@@ -43,7 +43,8 @@ def post_assignment():
         print(data)
         data['user_id'] = user['_id']
 
-        mongo.db.assignments.insert_one(data)
+        result = mongo.db.assignments.insert_one(data)
+        print(result)
 
         return ok()
     except ValidationError:

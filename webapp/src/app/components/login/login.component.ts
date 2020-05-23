@@ -43,12 +43,12 @@ export class LoginComponent implements OnInit {
     let creds = new Login(values.email, values.password);
     this.loginSubs = this.authService.login(creds).subscribe(
       (user) => {
-        localStorage.setItem('access_token', user.access_token);
-        localStorage.setItem('refresh_token', user.refresh_token);
+        this.authService.storeTokens(user);
         this.notifyService.showSuccess('Login successfuly', 'Login');
         this.router.navigateByUrl('/home')
       },
       (err) => {
+        console.log(err)
         this.notifyService.showError(err, 'Login');
       }
     );

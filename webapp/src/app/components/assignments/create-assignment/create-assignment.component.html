@@ -1,0 +1,20 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+        <div class="col form-group">
+            <label>Title</label>
+            <input type="text" formControlName="title" class="form-control" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col form-group">
+            <label>Info</label>
+            <input type="text" formControlName="info" class="form-control" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col form-group">
+            <input type="text" formControlName="due" placeholder="Choose date" class="form-control" bsDatepicker>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Create</button>
+</form>

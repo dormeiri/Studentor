@@ -1,0 +1,8 @@
+<div>
+    <a routerLink="create">Create</a>
+    <div *ngFor="let item of data">
+        <h2>{{item.title}}</h2>
+        <p>{{item.due | date}}</p>
+        <p>{{item.info}}</p>
+    </div>
+</div>
