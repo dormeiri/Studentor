@@ -1,4 +1,5 @@
 export class Assignment {
+    _id: String;
     user_id: String;
     due: Date;
     title: String;

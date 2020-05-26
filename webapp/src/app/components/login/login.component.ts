@@ -13,7 +13,7 @@ import { NotifyService } from 'src/app/services/notify.service';
 })
 export class LoginComponent implements OnInit {
 
-  loginSubs: Subscription;
+  subs: Subscription;
   loginForm: FormGroup;
 
   constructor(
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.loginSubs.unsubscribe();
+    this.subs?.unsubscribe();
   }
 
   onSubmit() {
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
 
     let values = this.loginForm.value;
     let creds = new Login(values.email, values.password);
-    this.loginSubs = this.authService.login(creds).subscribe(
+    this.subs = this.authService.login(creds).subscribe(
       (user) => {
         this.authService.storeTokens(user);
         this.notifyService.showSuccess('Login successfuly', 'Login');

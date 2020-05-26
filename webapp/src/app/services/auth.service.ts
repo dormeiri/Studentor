@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Login } from '../models/login.model'
-import { ApiBaseService } from './api-base.service';
-import { Router } from '@angular/router';
+import { User } from '../models/user.model';
 
 
 @Injectable({
@@ -13,20 +11,36 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  constructor(protected http: HttpClient) {  }
+  private loginStateChangedSource = new Subject<boolean>();
+
+  loginStateChanged$ = this.loginStateChangedSource.asObservable();
+
+  constructor(protected http: HttpClient) { }
+
+  register(user: User): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/auth/register`, user);
+  }
 
   login(login: Login): Observable<any> {
     return this.http.post(`${environment.apiUrl}/auth/login`, login);
   }
 
+  logout(): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/auth/logout`, '');
+  }
+
   storeTokens(tokens: any): void {
     localStorage.setItem('access_token', tokens.access_token);
     localStorage.setItem('refresh_token', tokens.refresh_token);
+
+    this.loginStateChangedSource.next(true);
   }
 
   removeTokens(): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+
+    this.loginStateChangedSource.next(false);
   }
 
   getToken(): string {

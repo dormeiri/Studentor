@@ -19,8 +19,12 @@ import { CreateAssignmentComponent } from './components/assignments/create-assig
 import { AuthInterceptor } from './services/auth.interceptor';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { LogoutComponent } from './components/logout/logout.component';
+import { UpdateAssignmentComponent } from './components/assignments/update-assignment/update-assignment.component';
+
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, AssignmentsComponent, CreateAssignmentComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, AssignmentsComponent, CreateAssignmentComponent, LogoutComponent, UpdateAssignmentComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,7 +34,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    MatSidenavModule
   ],
   providers: [
     AuthService,

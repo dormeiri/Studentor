@@ -1,0 +1,13 @@
+.card .assignment-controllers {
+    transition: height .3s;
+    height: 0;
+    overflow: hidden;
+}
+
+.card:hover .assignment-controllers {
+    height: 30.6px;
+}
+
+.card .assignment-controllers .assignment-controller {
+    margin-right: .5rem;
+}

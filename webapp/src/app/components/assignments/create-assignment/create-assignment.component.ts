@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { Assignment } from 'src/app/models/assignment.model';
 import { AssignmentsService } from 'src/app/services/assignments.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -18,7 +18,7 @@ export class CreateAssignmentComponent implements OnInit {
   form: FormGroup;
 
   constructor(
-    private assignmentsService: AssignmentsService, 
+    private assignmentsService: AssignmentsService,
     private notifyService: NotifyService,
     private formBuilder: FormBuilder,
     private router: Router) { }
@@ -32,7 +32,7 @@ export class CreateAssignmentComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subs.unsubscribe();
+    this.subs?.unsubscribe();
   }
 
   onSubmit() {

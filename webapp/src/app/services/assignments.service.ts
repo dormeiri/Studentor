@@ -19,14 +19,18 @@ export class AssignmentsService {
   }
 
   public getAssignment(id: String): Observable<Assignment | string> {
-    return this.http.get<Assignment>(`${environment.apiUrl}/assignments/id`);
+    return this.http.get<Assignment>(`${environment.apiUrl}/assignments/${id}`);
   }
 
   public postAssignment(data: Assignment): Observable<any> {
     return this.http.post(`${environment.apiUrl}/assignments`, data);
   }
 
-  public deleteAssignment(data: Assignment): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}/assignments/id`);
+  public putAssignment(data: Assignment): Observable<any> {
+    return this.http.put(`${environment.apiUrl}/assignments`, data);
+  }
+
+  public deleteAssignment(id: String): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/assignments/${id}`);
   }
 }
