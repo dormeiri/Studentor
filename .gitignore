@@ -1,3 +1,5 @@
+run_api.ps1
+
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

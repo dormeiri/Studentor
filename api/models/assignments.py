@@ -10,9 +10,10 @@ class CreateAssignmentSchema(BaseSchema):
 
 
 class UpdateAssignmentSchema(BaseSchema):
-    user_id = fields.Str(dump_only=True)
+    _id = fields.Str(required=True)
+    user_id = fields.Str(required=True)
     due = fields.DateTime()
-    title = fields.Str()
+    title = fields.Str(required=True)
     info = fields.Str()
 
 

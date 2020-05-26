@@ -39,6 +39,5 @@ def register_blueprints(app):
     app.register_blueprint(users_blueprint)
     app.register_blueprint(assignments_blueprint)
 
-
-if __name__ == '__main__':
-    create_app().run()
+if __name__ == "__main__":
+    create_app().run(debug=True)
