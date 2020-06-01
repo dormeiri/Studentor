@@ -30,7 +30,7 @@ def get_assignment(id):
 @auth_required
 def get_assignments():
     user = get_authenticated_user()
-    assignments = mongo.db.assignments.find({'user_id': user['_id']})
+    assignments = mongo.db.assignments.find({'user_id': user['_id']}).sort('due')
     return ok(list(assignments))
 
 
