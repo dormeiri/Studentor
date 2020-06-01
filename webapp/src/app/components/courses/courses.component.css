@@ -1,0 +1,13 @@
+.card .course-controllers {
+    transition: height .3s;
+    height: 0;
+    overflow: hidden;
+}
+
+.card:hover .course-controllers {
+    height: 30.6px;
+}
+
+.card .course-controllers .course-controller {
+    margin-right: .5rem;
+}

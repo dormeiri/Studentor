@@ -72,11 +72,11 @@ def get_authenticated_user():
         {'password': 0}
     )
 
-    if not user['logged_in']:
-        raise AccountInactive()
-
     if not user:
         raise UserNotFound()
+
+    if not user['logged_in']:
+        raise AccountInactive()
 
     return user
 

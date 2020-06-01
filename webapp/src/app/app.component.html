@@ -1,20 +1,8 @@
 <mat-sidenav-container [hasBackdrop]="true" fullscreen>
   <mat-sidenav #sidenav class="bg-dark sidenav" mode="over" [(opened)]="opened" [fixedInViewport]="true" position="end">
     <ul class="list-unstyled" *ngIf="isReady">
-      <li *ngIf="isAuthenticated">
-        <a routerLink="/home">Home</a>
-      </li>
-      <li *ngIf="isAuthenticated">
-        <a routerLink="/assignments">Assignments</a>
-      </li>
-      <li *ngIf="!isAuthenticated">
-        <a routerLink="/register">Register</a>
-      </li>
-      <li *ngIf="!isAuthenticated">
-        <a routerLink="/login">Login</a>
-      </li>
-      <li *ngIf="isAuthenticated">
-        <a routerLink="/logout">Logout</a>
+      <li *ngFor="let item of filteredMenuItems">
+        <a [routerLink]="item.route">{{item.name}}</a>
       </li>
     </ul>
   </mat-sidenav>

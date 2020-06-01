@@ -1,36 +1,51 @@
 import { Injectable } from '@angular/core';
-import { ApiBaseService } from './api-base.service';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Assignment } from '../models/assignment.model';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { catchError } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssignmentsService {
 
+  private dataUpdatedSource = new Subject();
+
+  dataUpdated$ = this.dataUpdatedSource.asObservable();
+
   constructor(protected http: HttpClient) { }
 
-  public getAssignments(): Observable<Assignment[] | string> {
+  public getAssignments(): Observable<Assignment[] | HttpErrorResponse> {
     return this.http.get<Assignment[]>(`${environment.apiUrl}/assignments`);
   }
 
-  public getAssignment(id: String): Observable<Assignment | string> {
+  public getAssignment(id: String): Observable<Assignment | HttpErrorResponse> {
     return this.http.get<Assignment>(`${environment.apiUrl}/assignments/${id}`);
+
   }
 
   public postAssignment(data: Assignment): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/assignments`, data);
+    if(!data.due) {
+      data.due = null;
+    }
+
+    return this.http.post(`${environment.apiUrl}/assignments`, data)
+      .pipe(tap(() => this.dataUpdatedSource.next()));
+
   }
 
   public putAssignment(data: Assignment): Observable<any> {
-    return this.http.put(`${environment.apiUrl}/assignments`, data);
+    if(!data.due) {
+      data.due = null;
+    }
+    
+    return this.http.put(`${environment.apiUrl}/assignments`, data)
+      .pipe(tap(() => this.dataUpdatedSource.next()));
   }
 
   public deleteAssignment(id: String): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}/assignments/${id}`);
+    return this.http.delete(`${environment.apiUrl}/assignments/${id}`)
+      .pipe(tap(() => this.dataUpdatedSource.next()));
   }
 }

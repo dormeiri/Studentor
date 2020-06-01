@@ -22,9 +22,12 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { LogoutComponent } from './components/logout/logout.component';
 import { UpdateAssignmentComponent } from './components/assignments/update-assignment/update-assignment.component';
+import { CoursesComponent } from './components/courses/courses.component';
+import { CreateCourseComponent } from './components/courses/create-course/create-course.component';
+import { UpdateCourseComponent } from './components/courses/update-course/update-course.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, AssignmentsComponent, CreateAssignmentComponent, LogoutComponent, UpdateAssignmentComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, AssignmentsComponent, CreateAssignmentComponent, LogoutComponent, UpdateAssignmentComponent, CoursesComponent, CreateCourseComponent, UpdateCourseComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

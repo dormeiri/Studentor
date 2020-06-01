@@ -2,7 +2,7 @@ import datetime
 from marshmallow import ValidationError
 from flask import request, Blueprint, abort
 from api.models.user import login_schema, create_user_schema
-from api.auth import (
+from api.dataaccess.auth import (
     authenticate, deauthenticate, refresh_authentication,
     auth_required, auth_refresh_required,
     AuthenticationError

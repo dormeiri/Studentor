@@ -9,6 +9,9 @@ import { CreateAssignmentComponent } from './components/assignments/create-assig
 import { LogoutComponent } from './components/logout/logout.component';
 import { UpdateAssignmentComponent } from './components/assignments/update-assignment/update-assignment.component';
 import { RegisterComponent } from './components/register/register.component';
+import { CoursesComponent } from './components/courses/courses.component';
+import { CreateCourseComponent } from './components/courses/create-course/create-course.component';
+import { UpdateCourseComponent } from './components/courses/update-course/update-course.component';
 
 
 const routes: Routes = [
@@ -37,6 +40,8 @@ const routes: Routes = [
     pathMatch: 'full',
     redirectTo: '/home'
   },
+
+  // Assignments
   {
     path: 'assignments',
     component: AssignmentsComponent,
@@ -50,6 +55,23 @@ const routes: Routes = [
   {
     path: 'assignments/update/:id',
     component: UpdateAssignmentComponent,
+    canActivate: [EnsureAuthenticatedService]
+  },
+
+  // Courses
+  {
+    path: 'courses',
+    component: CoursesComponent,
+    canActivate: [EnsureAuthenticatedService]
+  },
+  {
+    path: 'courses/create',
+    component: CreateCourseComponent,
+    canActivate: [EnsureAuthenticatedService]
+  },
+  {
+    path: 'courses/update/:id',
+    component: UpdateCourseComponent,
     canActivate: [EnsureAuthenticatedService]
   }
 ];

@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Assignment } from 'src/app/models/assignment.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AssignmentsService } from 'src/app/services/assignments.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-update-assignment',
   templateUrl: './update-assignment.component.html',
   styleUrls: ['./update-assignment.component.css']
 })
-export class UpdateAssignmentComponent implements OnInit {
+export class UpdateAssignmentComponent implements OnInit, OnDestroy {
 
   subs: Subscription;
   data: Assignment;
@@ -28,7 +29,7 @@ export class UpdateAssignmentComponent implements OnInit {
     this.form = this.formBuilder.group({
       title: ['', Validators.required],
       info: [''],
-      due: ['']
+      due: [null]
     });
 
     this.activatedRoute.params.subscribe(params => {
@@ -55,11 +56,6 @@ export class UpdateAssignmentComponent implements OnInit {
     this.form.controls['title'].setValue(this.data.title);
     this.form.controls['info'].setValue(this.data.info);
     this.form.controls['due'].setValue(new Date(this.data.due));
-    // this.form = this.formBuilder.group({
-    //   title: [this.data.title, Validators.required],
-    //   info: [this.data.info],
-    //   due: [this.data.due]
-    // });
   }
 
   setDataFromForm(): void {
@@ -75,14 +71,12 @@ export class UpdateAssignmentComponent implements OnInit {
 
     this.setDataFromForm();
     this.subs = this.assignmentsService.putAssignment(this.data).subscribe(
-      (data) => {
+      () => {
         this.notifyService.showSuccess('Success', 'Assignment Update');
-        this.router.navigateByUrl('/assignments')
       },
-      (err) => {
-        this.notifyService.showError(err, 'Assignment');
+      (err: HttpErrorResponse) => {
+        this.notifyService.showError(err.message, 'Assignment');
       }
     );
   }
-
 }

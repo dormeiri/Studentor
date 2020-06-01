@@ -3,6 +3,7 @@ import { AssignmentsService } from 'src/app/services/assignments.service';
 import { Assignment } from 'src/app/models/assignment.model';
 import { Subscription } from 'rxjs';
 import { NotifyService } from 'src/app/services/notify.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-assignments',
@@ -14,7 +15,9 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
   subs: Subscription;
   data: Assignment[];
 
-  constructor(private assignmentsService: AssignmentsService, private notifyService: NotifyService) { }
+  constructor(private assignmentsService: AssignmentsService, private notifyService: NotifyService) {
+    assignmentsService.dataUpdated$.subscribe(() => this.loadAssignments());
+   }
 
   ngOnInit(): void {
     this.loadAssignments();
@@ -26,11 +29,9 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
 
   deleteAssignment(item: Assignment) {
     this.subs = this.assignmentsService.deleteAssignment(item._id).subscribe(
-      ((data: Assignment[]) => {
-        this.loadAssignments();
-      }),
-      (err: string) => {
-        this.notifyService.showError(err, "Delete Assignment");
+      null,
+      (err: HttpErrorResponse) => {
+        this.notifyService.showError(err.message, "Delete Assignment");
       });
   }
 
@@ -39,8 +40,8 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
       (data: Assignment[]) => {
         this.data = data;
       },
-      (err: string) => {
-        this.notifyService.showError(err, "Get Assignments");
+      (err: HttpErrorResponse) => {
+        this.notifyService.showError(err.message, "Get Assignments");
       });
   }
 }

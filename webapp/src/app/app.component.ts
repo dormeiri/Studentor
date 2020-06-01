@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from './services/auth.service';
+import { MenuItem } from './models/menu-item.model';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +15,18 @@ export class AppComponent implements OnInit, OnDestroy {
   isAuthenticated: Boolean = false;
   opened: boolean;
 
-  title = 'Studentor';
+  menuItems: MenuItem[] = [
+    new MenuItem('Assignments', '/assignments', true),
+    new MenuItem('Courses', '/courses', true),
+    new MenuItem('Logout', '/logout', true),
+    new MenuItem('Register', '/register', false),
+    new MenuItem('Login', '/login', false),
+  ];
+
+  filteredMenuItems: MenuItem[];
 
   constructor(private auth: AuthService) {
-    auth.loginStateChanged$.subscribe(state => this.isAuthenticated = state)
+    auth.loginStateChanged$.subscribe(state => this.setState(state));
   }
 
   ngOnInit(): void {
@@ -30,7 +39,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   checkAuth(): void {
     this.isReady = false;
-    this.isAuthenticated = !!this.auth.getToken();
+    this.setState(!!this.auth.getToken());
     this.isReady = true;
+  }
+
+  setState(state: Boolean): void {
+    this.isAuthenticated = state;
+
+    this.filteredMenuItems = this.menuItems.filter(
+      item => item.ensureAuthenticated == this.isAuthenticated
+    );
   }
 }

@@ -2,7 +2,7 @@ from marshmallow import ValidationError
 from bson.objectid import ObjectId
 from flask import request, Blueprint, abort
 from werkzeug.security import generate_password_hash
-from api.auth import get_authenticated_user, auth_required, roles_required
+from api.dataaccess.auth import get_authenticated_user, auth_required, roles_required
 from api.extensions import mongo
 from api.responses import ok
 from api.models.user import update_user_schema

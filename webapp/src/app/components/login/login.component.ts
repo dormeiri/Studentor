@@ -25,7 +25,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"),
+        Validators.required
+      ]],
       password: ['', Validators.required],
     });
   }
@@ -48,8 +51,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/home')
       },
       (err) => {
-        console.log(err)
-        this.notifyService.showError(err, 'Login');
+        this.notifyService.showError(err.message, 'Login');
       }
     );
 
