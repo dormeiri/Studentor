@@ -1,5 +1,5 @@
 .card .assignment-controllers {
-    transition: height .3s;
+    transition: height 150ms;
     height: 0;
     overflow: hidden;
 }
@@ -10,7 +10,7 @@
 
 .card {
     cursor: pointer;
-    transition: transform .3s;
+    transition: transform 150ms;
 }
 
 .card:hover {

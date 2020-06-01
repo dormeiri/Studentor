@@ -1,4 +1,4 @@
-run_api.ps1
+*.ps1
 
 .vscode/*
 !.vscode/settings.json
