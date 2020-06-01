@@ -8,6 +8,11 @@
     height: 30.6px;
 }
 
-.card .course-controllers .course-controller {
-    margin-right: .5rem;
+.card {
+    cursor: pointer;
+    transition: transform .3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }

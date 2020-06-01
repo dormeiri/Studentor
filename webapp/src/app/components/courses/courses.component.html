@@ -1,18 +1,24 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-7 order-md-2 mb-5">
-            <h2>Create Course</h2>
-            <app-create-course></app-create-course>
+            <ng-container *ngIf="!updateId">
+                <h2>Create Course</h2>
+                <app-create-course></app-create-course>
+            </ng-container>
+
+            <ng-container *ngIf="updateId">
+                <h2>Update Course</h2>
+                <app-update-course [data_id]="updateId" (updated)="updateId = null"></app-update-course>
+            </ng-container>
         </div>
         <div class="col-md-5 order-md-1">
             <h2>My Courses</h2>
-            <div *ngFor="let item of data" class="card mb-2">
+            <div *ngFor="let item of data" class="card mb-3" [class.border-primary]="updateId == item._id"
+                (click)="updateId = item._id">
                 <div class="card-body">
                     <h3 class="card-title">{{item.name}}</h3>
                     <p class="card-text">{{item.info}}</p>
                     <div class="course-controllers">
-                        <a [routerLink]="['/courses/update', item._id]"
-                            class="btn btn-primary btn-sm course-controller" role="button">Update</a>
                         <button (click)="deleteCourse(item)"
                             class="btn btn-danger btn-sm course-controller">Delete</button>
                     </div>

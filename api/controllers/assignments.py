@@ -2,6 +2,7 @@ from marshmallow import ValidationError
 from bson.objectid import ObjectId
 from flask import request, Blueprint, abort
 from api.dataaccess.auth import get_authenticated_user, auth_required, roles_required
+from api.dataaccess.courses import get_course
 from api.extensions import mongo
 from api.responses import ok
 from api.models.assignment import create_assignment_schema, update_assignment_schema
@@ -42,7 +43,7 @@ def post_assignment():
         
         data['user_id'] = user['_id']
         data['course_id'] = ObjectId(data['course_id'])
-        course = mongo.db.courses.find_one({'_id': ObjectId(data['course_id'])})
+        course = get_course(data['course_id'])
 
         if not course:
             abort(400)
@@ -68,7 +69,7 @@ def put_assignment():
         print(data)
 
         id = data.pop('_id')
-        data['user_id'] = ObjectId(data['user_id'])
+        data['user_id'] = user['_id']
         
         if 'admin' not in user['roles'] and data['user_id'] != user['_id']:
             abort(403)

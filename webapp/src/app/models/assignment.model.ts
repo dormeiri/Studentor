@@ -1,3 +1,5 @@
+import { Course } from './course.model';
+
 export class Assignment {
     _id: String;
     user_id: String;
@@ -5,6 +7,7 @@ export class Assignment {
     due: Date;
     title: String;
     info: String;
+    course: Course;
 
     constructor(course_id: String, due: Date, title: String, info: String) {
         this.course_id = course_id;

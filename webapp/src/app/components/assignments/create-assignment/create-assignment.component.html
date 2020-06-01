@@ -31,15 +31,26 @@
     </div>
     <div class="form-row">
         <div class="col form-group">
-            <label>Course</label>
-            <select formControlName="course_id" class="form-control">
-                <option *ngFor="let course of courses" [value]="course._id">{{course.name}}</option>
-            </select>
-            <div class="text-danger"
-                *ngIf="form.controls['course_id'].invalid && (form.controls['course_id'].dirty || form.controls['course_id'].touched)">
-                Invalid
+            <label>
+                Course
+                <button class="btn btn-outline-secondary btn-sm ml-2"
+                    (click)="showCreateCourse=!showCreateCourse">{{showCreateCourse ? '-' : 'Add'}}</button>
+            </label>
+            <div class="card bg-light" *ngIf="showCreateCourse">
+                <div class="card-body">
+                    <app-create-course></app-create-course>
+                </div>
             </div>
+            <ng-container *ngIf="!showCreateCourse">
+                <select formControlName="course_id" class="form-control">
+                    <option *ngFor="let course of courses" [value]="course._id">{{course.name}}</option>
+                </select>
+                <div class="text-danger"
+                    *ngIf="form.controls['course_id'].invalid && (form.controls['course_id'].dirty || form.controls['course_id'].touched)">
+                    Invalid
+                </div>
+            </ng-container>
         </div>
     </div>
-    <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Create</button>
+    <button *ngIf="!showCreateCourse" class="btn btn-primary" type="submit" [disabled]="form.invalid">Create</button>
 </form>

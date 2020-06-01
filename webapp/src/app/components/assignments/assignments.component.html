@@ -1,19 +1,24 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-7 order-md-2 mb-5">
-            <h2>Create Assignment</h2>
-            <app-create-assignment></app-create-assignment>
+            <ng-container *ngIf="!updateId">
+                <h2>Create Assignment</h2>
+                <app-create-assignment></app-create-assignment>
+            </ng-container>
+
+            <ng-container *ngIf="updateId">
+                <h2>Update Assignment</h2>
+                <app-update-assignment [data_id]="updateId" (updated)="updateId = null"></app-update-assignment>
+            </ng-container>
         </div>
         <div class="col-md-5 order-md-1">
             <h2>My Assignments</h2>
-            <div *ngFor="let item of data" class="card mb-2">
+            <div *ngFor="let item of data" class="card mb-3" [class.border-primary]="updateId == item._id" (click)="updateId = item._id">
                 <div class="card-body">
-                    <h3 class="card-title">{{item.title}}</h3>
+                    <h3 class="card-title">{{item.course?.name}} / {{item.title}}</h3>
                     <p *ngIf="item.info" class="card-text">{{item.info}}</p>
                     <p *ngIf="item.due" class="card-text"><small class="text-muted">Due: {{item.due | date}}</small></p>
                     <div class="assignment-controllers">
-                        <a [routerLink]="['/assignments/update', item._id]"
-                            class="btn btn-primary btn-sm assignment-controller" role="button">Update</a>
                         <button (click)="deleteAssignment(item)"
                             class="btn btn-danger btn-sm assignment-controller">Delete</button>
                     </div>

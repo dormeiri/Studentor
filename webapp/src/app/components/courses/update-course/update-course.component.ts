@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Course } from 'src/app/models/course.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -11,7 +11,16 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './update-course.component.html',
   styleUrls: ['./update-course.component.css']
 })
-export class UpdateCourseComponent implements OnInit {
+export class UpdateCourseComponent implements OnInit, OnDestroy {
+
+  @Input()
+  set data_id(data_id: string) {
+    if (data_id) {
+      this.loadData(data_id);
+    }
+  }
+
+  @Output() updated = new EventEmitter<boolean>();
 
   subs: Subscription;
   data: Course;
@@ -20,18 +29,12 @@ export class UpdateCourseComponent implements OnInit {
   constructor(
     private coursesService: CoursesService,
     private notifyService: NotifyService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       info: [''],
-    });
-
-    this.activatedRoute.params.subscribe(params => {
-      this.loadData(params['id']);
     });
   }
 
@@ -39,7 +42,7 @@ export class UpdateCourseComponent implements OnInit {
     this.subs?.unsubscribe();
   }
 
-  loadData(id: String): void {
+  loadData(id: string): void {
     this.subs = this.coursesService.getCourse(id).subscribe(
       (data: Course) => {
         this.data = data;
@@ -69,7 +72,7 @@ export class UpdateCourseComponent implements OnInit {
     this.subs = this.coursesService.putCourse(this.data).subscribe(
       (data) => {
         this.notifyService.showSuccess('Success', 'Course Update');
-        this.router.navigateByUrl('/courses')
+        this.updated.emit(true);
       },
       (err) => {
         this.notifyService.showError(err, 'Course');

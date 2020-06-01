@@ -15,6 +15,8 @@ import { Course } from 'src/app/models/course.model';
 })
 export class CreateAssignmentComponent implements OnInit, OnDestroy {
 
+  showCreateCourse: Boolean;
+
   subs: Subscription;
   data: Assignment;
   courses: Course[];
@@ -24,7 +26,9 @@ export class CreateAssignmentComponent implements OnInit, OnDestroy {
     private assignmentsService: AssignmentsService,
     private coursesService: CoursesService,
     private notifyService: NotifyService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder) { 
+      coursesService.dataUpdated$.subscribe(() => this.loadCourses());
+    }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -61,6 +65,8 @@ export class CreateAssignmentComponent implements OnInit, OnDestroy {
   }
 
   loadCourses() {
+    this.showCreateCourse = false;
+
     this.subs = this.coursesService.getCourses().subscribe(
       (data: Course[]) => {
         this.courses = data;
