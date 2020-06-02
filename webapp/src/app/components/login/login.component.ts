@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
       (user) => {
         this.authService.storeTokens(user);
         this.notifyService.showSuccess('Login successfuly', 'Login');
-        this.router.navigateByUrl('/home')
+        this.router.navigateByUrl('/assignments')
       },
       (err) => {
         this.notifyService.showError(err.message, 'Login');

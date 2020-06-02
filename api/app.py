@@ -50,4 +50,4 @@ def register_blueprints(app):
     app.register_blueprint(courses_blueprint)
 
 if __name__ == "__main__":
-    create_app().run(debug=True)
+    create_app().run(debug=True, host='0.0.0.0')
