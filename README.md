@@ -2,15 +2,15 @@
 
 A tasks management system customized for the student needs. Keep your assignments, exams and gaps handled in a single place.
 
-Feel free to share your needs and ideas for a better studying environment
+Feel free to share your needs and ideas
 
-## Local run
+## How to run locally?
 
 ### Requirements
 
-1. MongoDB
-1. npm + Angular-CLI
-1. Python
+1. [MongoDB](https://www.mongodb.com/try/download/community)
+1. [NPM](https://www.npmjs.com/get-npm) + [Angular-CLI](https://cli.angular.io/)
+1. [Python](https://www.python.org/)
 
 ### Envrionment variables
 
@@ -19,19 +19,16 @@ Feel free to share your needs and ideas for a better studying environment
 | STUDENTOR_MONGO_URI | Used to access the MongoDB server | mongodb://localhost:27017/studentor |
 | STUDENTOR_JWT_SECRET_KEY | Secret key for JWT | secret-key123 |
 
-### Install dependecies
+### Run MongoDB
 
-#### Python
+1. Run the command `mongod --dbpath={{mongodb data path}}` in terminal
 
-1. In `/api` folder run `pip install -r requirements.txt`
+### Run API (Pyhon/Flask)
 
-#### Angular
+1. In `/api` folder run the command `pip install -r requirements.txt` in terminal
+1. In root folder, run the command `python -m api.app` in terminal
 
-Run terminal in the folder `/webapp` and then run the command `npm install`
+### Run Frontend (AngularJS)
 
-### Run
-
-1. Run MongoDB server with `mongod --dbpath={{mongodb data path}}`
-1. In the root folder run `python -m api.dbinit`
-1. In the root folder run `python -m api.main`
-1. In `/webapp` folder run the command `ng serve`
+1. In `/webapp` folder run the command `npm install` in terminal
+1. In `/webapp` folder run the command `ng serve` in terminal
