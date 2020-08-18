@@ -1,15 +1,15 @@
 import datetime
 from marshmallow import ValidationError
 from flask import request, Blueprint, abort
-from api.models.user import login_schema, create_user_schema
-from api.dataaccess.auth import (
+from models.user import login_schema, create_user_schema
+from dataaccess.auth import (
     authenticate, deauthenticate, refresh_authentication,
     auth_required, auth_refresh_required,
     AuthenticationError
 )
 from werkzeug.security import generate_password_hash
-from api.extensions import mongo
-from api.responses import ok
+from extensions import mongo
+from responses import ok
 
 
 auth_blueprint = Blueprint('/api/auth', __name__)

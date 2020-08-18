@@ -3,13 +3,13 @@ from os import environ
 from flask import Flask
 from flask_cors import CORS
 
-from api.dbinit import update_index
+from dbinit import update_index
 
-from api.extensions import JSONEncoder, mongo, jwt
-from api.controllers.auth import auth_blueprint
-from api.controllers.users import users_blueprint
-from api.controllers.assignments import assignments_blueprint
-from api.controllers.courses import courses_blueprint
+from extensions import JSONEncoder, mongo, jwt
+from controllers.auth import auth_blueprint
+from controllers.users import users_blueprint
+from controllers.assignments import assignments_blueprint
+from controllers.courses import courses_blueprint
 
 
 def create_app():
@@ -33,8 +33,9 @@ def create_app():
 
 
 def register_config(app):
-    app.config['MONGO_URI'] = environ['STUDENTOR_MONGO_URI']
-    app.config['MONGO_DBNAME'] = 'studentor'
+    host = environ["DB_PORT_27017_TCP_ADDR"]
+    app.config['MONGO_URI'] = environ['STUDENTOR_MONGO_URI'].replace(r'{HOST}', host)
+    app.config['MONGO_DBNAME'] = environ['STUDENTOR_MONGO_DBNAME']
     app.config['JWT_SECRET_KEY'] = environ['STUDENTOR_JWT_SECRET_KEY']
 
 

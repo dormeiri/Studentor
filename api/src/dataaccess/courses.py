@@ -1,4 +1,4 @@
-from api.extensions import mongo
+from extensions import mongo
 from bson import ObjectId
 
 def get_course(id):

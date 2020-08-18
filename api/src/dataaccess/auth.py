@@ -7,7 +7,7 @@ from flask_jwt_extended import (
     verify_jwt_in_request, verify_jwt_refresh_token_in_request
 )
 from werkzeug.security import check_password_hash
-from api.extensions import mongo
+from extensions import mongo
 
 
 class AuthenticationError(Exception):

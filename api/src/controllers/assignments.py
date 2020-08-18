@@ -1,11 +1,11 @@
 from marshmallow import ValidationError
 from bson.objectid import ObjectId
 from flask import request, Blueprint, abort
-from api.dataaccess.auth import get_authenticated_user, auth_required, roles_required
-from api.dataaccess.courses import get_course
-from api.extensions import mongo
-from api.responses import ok
-from api.models.assignment import create_assignment_schema, update_assignment_schema
+from dataaccess.auth import get_authenticated_user, auth_required, roles_required
+from dataaccess.courses import get_course
+from extensions import mongo
+from responses import ok
+from models.assignment import create_assignment_schema, update_assignment_schema
 
 
 assignments_blueprint = Blueprint('/api/assignments', __name__)

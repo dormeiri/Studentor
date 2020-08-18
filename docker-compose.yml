@@ -1,0 +1,15 @@
+api:
+  build: api
+  command: python ./wsgi.py
+  env_file:
+    - api/.env
+  ports:
+    - "5000:5000"
+  links:
+    - db
+db:
+  image: mongo
+webapp:
+  build: webapp
+  ports:
+    - "9000:80"

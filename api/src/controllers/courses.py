@@ -1,10 +1,10 @@
 from marshmallow import ValidationError
 from bson.objectid import ObjectId
 from flask import request, Blueprint, abort
-from api.dataaccess.auth import get_authenticated_user, auth_required, roles_required
-from api.extensions import mongo
-from api.responses import ok
-from api.models.course import create_course_schema, update_course_schema
+from dataaccess.auth import get_authenticated_user, auth_required, roles_required
+from extensions import mongo
+from responses import ok
+from models.course import create_course_schema, update_course_schema
 
 
 courses_blueprint = Blueprint('/api/courses', __name__)

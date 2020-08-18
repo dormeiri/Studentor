@@ -1,5 +1,5 @@
 from marshmallow import fields
-from .model import BaseSchema
+from models.model import BaseSchema
 
 
 class CreateAssignmentSchema(BaseSchema):
