@@ -8,5 +8,5 @@ Feel free to share your needs and ideas
 
 1) Install [Docker](https://www.docker.com/get-started)
 2) Open terminal
-2) Navigate to the [root folder](/) with `cd` command
+2) Navigate to the [root folder](https://github.com/dormeiri/Studentor) with `cd` command
 3) Run `docker-compose up --build`
