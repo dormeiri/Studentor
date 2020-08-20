@@ -33,8 +33,7 @@ def create_app():
 
 
 def register_config(app):
-    host = environ["DB_PORT_27017_TCP_ADDR"]
-    app.config['MONGO_URI'] = environ['STUDENTOR_MONGO_URI'].replace(r'{HOST}', host)
+    app.config['MONGO_URI'] = environ['STUDENTOR_MONGO_URI']
     app.config['MONGO_DBNAME'] = environ['STUDENTOR_MONGO_DBNAME']
     app.config['JWT_SECRET_KEY'] = environ['STUDENTOR_JWT_SECRET_KEY']
 
@@ -50,5 +49,9 @@ def register_blueprints(app):
     app.register_blueprint(assignments_blueprint)
     app.register_blueprint(courses_blueprint)
 
+
+app = create_app()
+
+
 if __name__ == "__main__":
-    create_app().run(debug=True, host='0.0.0.0')
+    app.run(host='0.0.0.0')

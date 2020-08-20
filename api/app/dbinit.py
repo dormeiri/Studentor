@@ -3,7 +3,7 @@ from pymongo import MongoClient, ASCENDING, DESCENDING
 
 
 def get_connection():
-    return MongoClient(environ['DB_PORT_27017_TCP_ADDR'], 27017)
+    return MongoClient(environ['MONGO_HOST'], 27017)
 
 
 def update_index():
