@@ -13,7 +13,7 @@ from controllers.courses import courses_blueprint
 
 
 def create_app():
-    
+
     print('Creating app...')
     app = Flask(__name__)
 
@@ -51,7 +51,3 @@ def register_blueprints(app):
 
 
 app = create_app()
-
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0')
