@@ -1,7 +1,7 @@
 version: "3"
 services:
   proxy:
-    image: nginx:alpine
+    image: nginx:1.19-alpine
     volumes:
       - ./proxy/reverse_proxy.conf:/etc/nginx/conf.d/default.conf
     ports:

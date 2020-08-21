@@ -1,6 +1,6 @@
 # stage 1
 
-FROM node:alpine AS my-app-build
+FROM node:14.8.0-alpine AS my-app-build
 WORKDIR /webapp
 COPY . .
 RUN npm install && npm run build
@@ -8,6 +8,6 @@ RUN npm install && npm run build
 
 # stage 2
 
-FROM nginx:alpine
+FROM nginx:1.19-alpine
 COPY --from=my-app-build /webapp/dist/webapp /usr/share/nginx/html
 EXPOSE 80
