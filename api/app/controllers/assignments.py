@@ -1,11 +1,13 @@
 from marshmallow import ValidationError
-from bson.objectid import ObjectId
 from flask import request, Blueprint, abort
-from dataaccess.auth import get_authenticated_user, auth_required, roles_required
-from dataaccess.courses import get_course
-from extensions import mongo
+from dataaccess.auth import (
+    get_authenticated_user, auth_required, exposed, get_my
+)
+from extensions import context
 from responses import ok
-from models.assignment import create_assignment_schema, update_assignment_schema
+from models.assignment import (
+    create_assignment_schema, update_assignment_schema
+)
 
 
 assignments_blueprint = Blueprint('/api/assignments', __name__)
@@ -14,13 +16,12 @@ assignments_blueprint = Blueprint('/api/assignments', __name__)
 @assignments_blueprint.route('/api/assignments/<id>', methods=['GET'])
 @auth_required
 def get_assignment(id):
-    assignment = mongo.db.assignments.find_one({'_id': ObjectId(id)})
+    assignment = context.assignments.find(id)
 
     if not assignment:
         abort(404)
 
-    user = get_authenticated_user()
-    if 'admin' not in user['roles'] and assignment['user_id'] != user['_id']:
+    if not exposed(assignment, 'admin'):
         abort(403)
 
     return ok(assignment)
@@ -29,8 +30,8 @@ def get_assignment(id):
 @assignments_blueprint.route('/api/assignments', methods=['GET'])
 @auth_required
 def get_assignments():
-    user = get_authenticated_user()
-    assignments = mongo.db.assignments.find({'user_id': user['_id']}).sort('due')
+    assignments = get_my(context.assignments).sort('due')
+
     return ok(list(assignments))
 
 
@@ -40,19 +41,17 @@ def post_assignment():
     try:
         data = create_assignment_schema.load(request.get_json())
         user = get_authenticated_user()
-        
+
         data['user_id'] = user['_id']
-        data['course_id'] = ObjectId(data['course_id'])
-        course = get_course(data['course_id'])
+        course = context.courses.find(data['course_id'])
 
         if not course:
             abort(400)
 
-        if 'admin' not in user['roles'] and course['user_id'] != user['_id']:
+        if not exposed(course, 'admin'):
             abort(403)
 
-        result = mongo.db.assignments.insert_one(data)
-        print(result)
+        context.assignments.create(data)
 
         return ok()
     except ValidationError:
@@ -64,17 +63,17 @@ def post_assignment():
 def put_assignment():
     try:
         data = update_assignment_schema.load(request.get_json())
-        user = get_authenticated_user()
-
-        print(data)
-
         id = data.pop('_id')
-        data['user_id'] = user['_id']
-        
-        if 'admin' not in user['roles'] and data['user_id'] != user['_id']:
+
+        old = context.assignments.find(id)
+
+        if not old:
+            abort(400)
+
+        if not exposed(old, 'admin'):
             abort(403)
-        
-        result = mongo.db.assignments.update_one({'_id': ObjectId(id)}, {'$set': data})
+
+        context.assignments.update(id, data)
 
         return ok()
     except ValidationError:
@@ -84,15 +83,14 @@ def put_assignment():
 @assignments_blueprint.route('/api/assignments/<id>', methods=['DELETE'])
 @auth_required
 def delete_user(id):
-    assignment = mongo.db.assignments.find_one({'_id': ObjectId(id)})
+    assignment = context.assignments.find(id)
 
     if not assignment:
         abort(404)
 
-    user = get_authenticated_user()
-    if 'admin' not in user['roles'] and assignment['user_id'] != user['_id']:
+    if not exposed(assignment, 'admin'):
         abort(403)
 
-    resp = mongo.db.assignments.delete_one({'_id': ObjectId(id)})
+    context.assignments.delete(id)
 
     return ok()

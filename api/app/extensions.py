@@ -1,11 +1,13 @@
 import json
 import datetime
+from dataaccess.context import Context
 from flask_pymongo import PyMongo
 from flask_jwt_extended import JWTManager
 from bson.objectid import ObjectId
 
 
 mongo = PyMongo()
+context = Context()
 jwt = JWTManager()
 
 

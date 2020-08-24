@@ -1,8 +1,9 @@
 from marshmallow import ValidationError
-from bson.objectid import ObjectId
 from flask import request, Blueprint, abort
-from dataaccess.auth import get_authenticated_user, auth_required, roles_required
-from extensions import mongo
+from dataaccess.auth import (
+    get_authenticated_user, auth_required, exposed, get_my
+)
+from extensions import context
 from responses import ok
 from models.course import create_course_schema, update_course_schema
 
@@ -13,13 +14,12 @@ courses_blueprint = Blueprint('/api/courses', __name__)
 @courses_blueprint.route('/api/courses/<id>', methods=['GET'])
 @auth_required
 def get_course(id):
-    course = mongo.db.courses.find_one({'_id': ObjectId(id)})
+    course = context.courses.find(id)
 
     if not course:
         abort(404)
 
-    user = get_authenticated_user()
-    if 'admin' not in user['roles'] and course['user_id'] != user['_id']:
+    if not exposed(course, 'admin'):
         abort(403)
 
     return ok(course)
@@ -28,8 +28,8 @@ def get_course(id):
 @courses_blueprint.route('/api/courses', methods=['GET'])
 @auth_required
 def get_courses():
-    user = get_authenticated_user()
-    courses = mongo.db.courses.find({'user_id': user['_id']})
+    courses = get_my(context.courses)
+
     return ok(list(courses))
 
 
@@ -38,11 +38,11 @@ def get_courses():
 def post_course():
     try:
         data = create_course_schema.load(request.get_json())
+
         user = get_authenticated_user()
         data['user_id'] = user['_id']
 
-        result = mongo.db.courses.insert_one(data)
-        print(result)
+        context.courses.create(data)
 
         return ok()
     except ValidationError:
@@ -54,17 +54,17 @@ def post_course():
 def put_course():
     try:
         data = update_course_schema.load(request.get_json())
-        user = get_authenticated_user()
-
-        print(data)
-
         id = data.pop('_id')
-        data['user_id'] = ObjectId(data['user_id'])
-        
-        if 'admin' not in user['roles'] and data['user_id'] != user['_id']:
+
+        old = context.courses.find(id)
+
+        if not old:
+            abort(400)
+
+        if not exposed(old, 'admin'):
             abort(403)
-        
-        result = mongo.db.courses.update_one({'_id': ObjectId(id)}, {'$set': data})
+
+        context.courses.update(id, data)
 
         return ok()
     except ValidationError:
@@ -74,15 +74,14 @@ def put_course():
 @courses_blueprint.route('/api/courses/<id>', methods=['DELETE'])
 @auth_required
 def delete_user(id):
-    course = mongo.db.courses.find_one({'_id': ObjectId(id)})
+    course = context.courses.find(id)
 
     if not course:
         abort(404)
 
-    user = get_authenticated_user()
-    if 'admin' not in user['roles'] and course['user_id'] != user['_id']:
+    if not exposed(course, 'admin'):
         abort(403)
 
-    resp = mongo.db.courses.delete_one({'_id': ObjectId(id)})
+    context.courses.delete(id)
 
     return ok()

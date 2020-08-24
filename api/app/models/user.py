@@ -12,6 +12,7 @@ class UpdateUserSchema(BaseSchema):
     first_name = fields.Str()
     last_name = fields.Str()
     roles = fields.List(fields.Str)
+    courses = fields.List(fields.Str)
 
 
 class CreateUserSchema(BaseSchema):
@@ -21,6 +22,7 @@ class CreateUserSchema(BaseSchema):
     last_name = fields.Str(required=True)
     created_at = fields.DateTime(dumps_only=True)
     roles = fields.List(fields.Str, required=True)
+    courses = fields.List(fields.Str, dumps_only=True)
 
 
 login_schema = LoginSchema()

@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 from dbinit import update_index
 
-from extensions import JSONEncoder, mongo, jwt
+from extensions import JSONEncoder, mongo, jwt, context
 from controllers.auth import auth_blueprint
 from controllers.users import users_blueprint
 from controllers.assignments import assignments_blueprint
@@ -41,6 +41,7 @@ def register_config(app):
 def register_extensions(app):
     mongo.init_app(app)
     jwt.init_app(app)
+    context.init_app(mongo.db)
 
 
 def register_blueprints(app):

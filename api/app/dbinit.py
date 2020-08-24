@@ -14,8 +14,10 @@ def update_index():
     mongo.studentor.assignments.create_index([('title', ASCENDING)])
     mongo.studentor.assignments.create_index([('due', DESCENDING)])
 
-    mongo.studentor.courses.create_index([('user_id', ASCENDING)])
     mongo.studentor.courses.create_index([('name', ASCENDING)])
+
+    mongo.studentor.exams.create_index([('course_id', ASCENDING)])
+    mongo.studentor.exams.create_index([('date', DESCENDING)])
 
 
 if __name__ == "__main__":

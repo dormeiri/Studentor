@@ -1,9 +1,10 @@
 from marshmallow import ValidationError
-from bson.objectid import ObjectId
 from flask import request, Blueprint, abort
 from werkzeug.security import generate_password_hash
-from dataaccess.auth import get_authenticated_user, auth_required, roles_required
-from extensions import mongo
+from dataaccess.auth import (
+    get_authenticated_user, auth_required, roles_required
+)
+from extensions import context
 from responses import ok
 from models.user import update_user_schema
 
@@ -21,16 +22,14 @@ def me():
 def put_user():
     try:
         data = update_user_schema.load(request.get_json())
+
         current_user = get_authenticated_user()
-        user = mongo.db.users.find_one({'_id': current_user['_id']})
+        user = context.users.find(current_user['_id'])
 
         if 'password' in data:
             data['password'] = generate_password_hash(data['password'])
 
-        mongo.db.users.update_one(
-            {'_id': ObjectId(user['_id'])},
-            {'$set': data}
-        )
+        context.users.update(user['_id'], data)
 
         return ok()
     except ValidationError:
@@ -40,7 +39,8 @@ def put_user():
 @users_blueprint.route('/api/users/<id>', methods=['DELETE'])
 @roles_required(['admin'])
 def delete_user(id):
-    resp = mongo.db.users.delete_one({'_id': ObjectId(id)})
+    resp = context.users.delete(id)
+
     if resp.deleted_count > 0:
         return ok()
     else:

@@ -36,6 +36,28 @@ class UserNotFound(AuthenticationError):
         super().__init__(code=404, msg='User not found')
 
 
+def get_my(collection, user_id_key='user_id'):
+    user = get_authenticated_user()
+
+    return collection.where({user_id_key: user['_id']})
+
+
+def exposed(data, *roles, user_id_key='user_id'):
+    user = get_authenticated_user()
+
+    return id_exposed(user, data[user_id_key]) or roles_exposed(user, roles)
+
+
+def id_exposed(user, id):
+    return user['_id'] == id
+
+
+def roles_exposed(user, *roles):
+    user_roles = set(user['roles'])
+
+    return any(lambda r: r in user_roles, roles)
+
+
 def authenticate(data):
     email = data['email']
     pwd = data['password']
