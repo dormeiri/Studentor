@@ -7,6 +7,7 @@ class CreateExamSchema(BaseSchema):
     date = fields.DateTime(allow_none=True)
     title = fields.Str(required=True)
     info = fields.Str()
+    grade = fields.Int(allow_none=True)
 
 
 class UpdateExamSchema(BaseSchema):
@@ -14,6 +15,7 @@ class UpdateExamSchema(BaseSchema):
     date = fields.DateTime(allow_none=True)
     title = fields.Str(required=True)
     info = fields.Str()
+    grade = fields.Int(allow_none=True)
 
 
 create_exam_schema = CreateExamSchema()
