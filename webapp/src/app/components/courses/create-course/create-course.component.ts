@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, fromEventPattern } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Course } from 'src/app/models/course.model';
 import { CoursesService } from 'src/app/services/courses.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { Router } from '@angular/router';
+import { BaseFormHelper } from 'src/app/helpers/basic-form/base-form-helper';
+import { CreateCourseFormHelper } from './create-course-form-helper';
 
 @Component({
   selector: 'app-create-course',
@@ -13,41 +14,37 @@ import { Router } from '@angular/router';
 })
 export class CreateCourseComponent implements OnInit, OnDestroy {
 
-  subs: Subscription;
-  data: Course;
-  form: FormGroup;
+  private formHelper: BaseFormHelper<Course>;
+
 
   constructor(
-    private coursesService: CoursesService,
-    private notifyService: NotifyService,
-    private formBuilder: FormBuilder,
-    private router: Router) { }
-
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
+    coursesService: CoursesService,
+    notifyService: NotifyService,
+    formBuilder: FormBuilder) {
+    this.formHelper = new CreateCourseFormHelper({
       name: ['', Validators.required],
       info: [''],
-    });
+    },
+      coursesService,
+      notifyService,
+      formBuilder);
+  }
+
+
+  get form(): FormGroup {
+    return this.formHelper.form;
+  }
+
+
+  ngOnInit(): void {
+    this.formHelper.init();
   }
 
   ngOnDestroy() {
-    this.subs?.unsubscribe();
+    this.formHelper.destroy();
   }
 
   onSubmit() {
-    if (this.form.invalid) {
-      return;
-    }
-
-    let values = this.form.value;
-    let entity = new Course(values.name, values.info);
-    this.subs = this.coursesService.postCourse(entity).subscribe(
-      (data) => {
-        this.notifyService.showSuccess('Course created', 'Course');
-      },
-      (err) => {
-        this.notifyService.showError(err, 'Course');
-      }
-    );
+    this.formHelper.submit();
   }
 }

@@ -10,10 +10,10 @@ from models.exam import (
 )
 
 
-exams_blueprint = Blueprint('/api/exams', __name__)
+exams_blueprint = Blueprint('/exams', __name__)
 
 
-@exams_blueprint.route('/api/exams/<id>', methods=['GET'])
+@exams_blueprint.route('/exams/<id>', methods=['GET'])
 @auth_required
 def get_exam(id):
     exam = context.exams.find(id)
@@ -27,7 +27,7 @@ def get_exam(id):
     return ok(exam)
 
 
-@exams_blueprint.route('/api/exams', methods=['GET'])
+@exams_blueprint.route('/exams', methods=['GET'])
 @auth_required
 def get_exams():
     exams = get_my(context.exams).sort('due')
@@ -35,7 +35,7 @@ def get_exams():
     return ok(list(exams))
 
 
-@exams_blueprint.route('/api/exams', methods=['POST'])
+@exams_blueprint.route('/exams', methods=['POST'])
 @auth_required
 def post_exam():
     try:
@@ -58,7 +58,7 @@ def post_exam():
         abort(400)
 
 
-@exams_blueprint.route('/api/exams', methods=['PUT'])
+@exams_blueprint.route('/exams', methods=['PUT'])
 @auth_required
 def put_exam():
     try:
@@ -80,7 +80,7 @@ def put_exam():
         abort(400)
 
 
-@exams_blueprint.route('/api/exams/<id>', methods=['DELETE'])
+@exams_blueprint.route('/exams/<id>', methods=['DELETE'])
 @auth_required
 def delete_user(id):
     exam = context.exams.find(id)

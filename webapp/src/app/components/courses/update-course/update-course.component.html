@@ -1,24 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-row">
-        <div class="col form-group">
-            <label>Name</label>
-            <input type="text" formControlName="name" class="form-control" />
-            <div class="text-danger"
-                *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)">
-                Invalid
-            </div>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="col form-group">
-            <label>Info</label>
-            <input type="text" formControlName="info" class="form-control" />
-            <div class="text-danger"
-                *ngIf="form.controls['info'].invalid && (form.controls['info'].dirty || form.controls['info'].touched)">
-                Invalid
-            </div>
-        </div>
-    </div>
+    <app-text-input formControlName="name">Name</app-text-input>
+    <app-text-input formControlName="info">Info</app-text-input>
     <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Update</button>
     <button class="btn btn-secondary" (click)="updated.emit(false)">Cancel</button>
 </form>

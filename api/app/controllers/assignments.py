@@ -10,10 +10,10 @@ from models.assignment import (
 )
 
 
-assignments_blueprint = Blueprint('/api/assignments', __name__)
+assignments_blueprint = Blueprint('/assignments', __name__)
 
 
-@assignments_blueprint.route('/api/assignments/<id>', methods=['GET'])
+@assignments_blueprint.route('/assignments/<id>', methods=['GET'])
 @auth_required
 def get_assignment(id):
     assignment = context.assignments.find(id)
@@ -27,7 +27,7 @@ def get_assignment(id):
     return ok(assignment)
 
 
-@assignments_blueprint.route('/api/assignments', methods=['GET'])
+@assignments_blueprint.route('/assignments', methods=['GET'])
 @auth_required
 def get_assignments():
     assignments = get_my(context.assignments).sort('due')
@@ -35,7 +35,7 @@ def get_assignments():
     return ok(list(assignments))
 
 
-@assignments_blueprint.route('/api/assignments', methods=['POST'])
+@assignments_blueprint.route('/assignments', methods=['POST'])
 @auth_required
 def post_assignment():
     try:
@@ -58,7 +58,7 @@ def post_assignment():
         abort(400)
 
 
-@assignments_blueprint.route('/api/assignments', methods=['PUT'])
+@assignments_blueprint.route('/assignments', methods=['PUT'])
 @auth_required
 def put_assignment():
     try:
@@ -80,7 +80,7 @@ def put_assignment():
         abort(400)
 
 
-@assignments_blueprint.route('/api/assignments/<id>', methods=['DELETE'])
+@assignments_blueprint.route('/assignments/<id>', methods=['DELETE'])
 @auth_required
 def delete_user(id):
     assignment = context.assignments.find(id)

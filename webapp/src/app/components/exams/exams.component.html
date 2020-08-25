@@ -1,0 +1,35 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-7 order-md-2 mb-5">
+            <ng-container *ngIf="!updateId">
+                <h2>Create Exam</h2>
+                <app-create-exam></app-create-exam>
+            </ng-container>
+
+            <ng-container *ngIf="updateId">
+                <h2>Update Exam</h2>
+                <app-update-exam [data_id]="updateId" (updated)="updateId = null"></app-update-exam>
+            </ng-container>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <h2>My Exams</h2>
+            <div *ngFor="let item of data" class="card mb-3" [class.border-primary]="updateId == item._id"
+                (click)="updateId = item._id">
+                <div class="card-body">
+                    <h3 class="card-title">{{item.course?.name}} / {{item.title}}</h3>
+                    <p *ngIf="item.info" class="card-text">{{item.info}}</p>
+                    <p *ngIf="item.date" class="card-text">
+                        <small class="text-muted">Due: {{item.date | date}}</small>
+                    </p>
+                    <p *ngIf="item.grade" class="card-text">
+                        <small class="text-muted">Grade: {{item.grade}}</small>
+                    </p>
+                    <div class="exam-controllers">
+                        <button (click)="deleteExam(item)"
+                            class="btn btn-danger btn-sm exam-controller">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

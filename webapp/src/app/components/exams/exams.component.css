@@ -1,0 +1,18 @@
+.card .exam-controllers {
+    transition: height 150ms;
+    height: 0;
+    overflow: hidden;
+}
+
+.card:hover .exam-controllers {
+    height: 30.6px;
+}
+
+.card {
+    cursor: pointer;
+    transition: transform 150ms;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}

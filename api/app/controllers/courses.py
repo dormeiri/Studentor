@@ -8,10 +8,10 @@ from responses import ok
 from models.course import create_course_schema, update_course_schema
 
 
-courses_blueprint = Blueprint('/api/courses', __name__)
+courses_blueprint = Blueprint('/courses', __name__)
 
 
-@courses_blueprint.route('/api/courses/<id>', methods=['GET'])
+@courses_blueprint.route('/courses/<id>', methods=['GET'])
 @auth_required
 def get_course(id):
     course = context.courses.find(id)
@@ -25,7 +25,7 @@ def get_course(id):
     return ok(course)
 
 
-@courses_blueprint.route('/api/courses', methods=['GET'])
+@courses_blueprint.route('/courses', methods=['GET'])
 @auth_required
 def get_courses():
     courses = get_my(context.courses)
@@ -33,7 +33,7 @@ def get_courses():
     return ok(list(courses))
 
 
-@courses_blueprint.route('/api/courses', methods=['POST'])
+@courses_blueprint.route('/courses', methods=['POST'])
 @auth_required
 def post_course():
     try:
@@ -49,7 +49,7 @@ def post_course():
         abort(400)
 
 
-@courses_blueprint.route('/api/courses', methods=['PUT'])
+@courses_blueprint.route('/courses', methods=['PUT'])
 @auth_required
 def put_course():
     try:
@@ -71,7 +71,7 @@ def put_course():
         abort(400)
 
 
-@courses_blueprint.route('/api/courses/<id>', methods=['DELETE'])
+@courses_blueprint.route('/courses/<id>', methods=['DELETE'])
 @auth_required
 def delete_user(id):
     course = context.courses.find(id)

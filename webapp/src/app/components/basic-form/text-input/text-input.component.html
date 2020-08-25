@@ -1,0 +1,8 @@
+<div class="form-group">
+    <label><ng-content></ng-content></label>
+    <input type="text" [formControl]="ngControl.control" class="form-control"/>
+    <div class="text-danger"
+        *ngIf="ngControl.touched && ngControl.invalid">
+        Invalid
+    </div>
+</div>

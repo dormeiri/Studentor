@@ -67,7 +67,7 @@ export class CreateAssignmentComponent implements OnInit, OnDestroy {
   loadCourses() {
     this.showCreateCourse = false;
 
-    this.subs = this.coursesService.getCourses().subscribe(
+    this.subs = this.coursesService.getAll().subscribe(
       (data: Course[]) => {
         this.courses = data;
       },

@@ -29,7 +29,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   deleteCourse(item: Course) {
-    this.subs = this.coursesService.deleteCourse(item._id).subscribe(
+    this.subs = this.coursesService.delete(item._id).subscribe(
       null,
       (err: HttpErrorResponse) => {
         this.notifyService.showError(err.message, "Delete Course");
@@ -37,7 +37,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   private loadCourses() {
-    this.subs = this.coursesService.getCourses().subscribe(
+    this.subs = this.coursesService.getAll().subscribe(
       (data: Course[]) => {
         this.data = data;
       },

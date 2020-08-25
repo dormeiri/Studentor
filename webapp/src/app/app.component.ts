@@ -17,6 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   menuItems: MenuItem[] = [
     new MenuItem('Assignments', '/assignments', true),
+    new MenuItem('Exams', '/exams', true),
     new MenuItem('Courses', '/courses', true),
     new MenuItem('Logout', '/logout', true),
     new MenuItem('Register', '/register', false),

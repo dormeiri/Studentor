@@ -8,16 +8,16 @@ from extensions import context
 from responses import ok
 from models.user import update_user_schema
 
-users_blueprint = Blueprint('/api/users', __name__)
+users_blueprint = Blueprint('/users', __name__)
 
 
-@users_blueprint.route('/api/users/me', methods=['GET'])
+@users_blueprint.route('/users/me', methods=['GET'])
 @auth_required
 def me():
     return ok(get_authenticated_user())
 
 
-@users_blueprint.route('/api/users', methods=['PUT'])
+@users_blueprint.route('/users', methods=['PUT'])
 @auth_required
 def put_user():
     try:
@@ -36,7 +36,7 @@ def put_user():
         abort(400)
 
 
-@users_blueprint.route('/api/users/<id>', methods=['DELETE'])
+@users_blueprint.route('/users/<id>', methods=['DELETE'])
 @roles_required(['admin'])
 def delete_user(id):
     resp = context.users.delete(id)

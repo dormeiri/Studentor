@@ -12,20 +12,31 @@
     </div>
     <div class="form-row">
         <div class="col form-group">
-            <label>Due</label>
-            <input type="text" formControlName="due" placeholder="Choose date" class="form-control" bsDatepicker>
+            <label>Info</label>
+            <input type="text" formControlName="info" class="form-control" />
             <div class="text-danger"
-                *ngIf="form.controls['due'].invalid && (form.controls['due'].dirty || form.controls['due'].touched)">
+                *ngIf="form.controls['info'].invalid && (form.controls['info'].dirty || form.controls['info'].touched)">
                 Invalid
             </div>
         </div>
     </div>
     <div class="form-row">
         <div class="col form-group">
-            <label>Info</label>
-            <input type="text" formControlName="info" class="form-control" />
+            <label>Date</label>
+            <input type="text" formControlName="date" placeholder="Choose date" class="form-control" bsDatepicker>
             <div class="text-danger"
-                *ngIf="form.controls['info'].invalid && (form.controls['info'].dirty || form.controls['info'].touched)">
+                *ngIf="form.controls['date'].invalid && (form.controls['date'].dirty || form.controls['date'].touched)">
+                Invalid
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <div class="col form-group">
+            <label>Grade</label>
+            <input type="number" formControlName="grade" class="form-control" />
+            <div class="text-danger"
+                *ngIf="form.controls['grade'].invalid && (form.controls['grade'].dirty || form.controls['grade'].touched)">
                 Invalid
             </div>
         </div>

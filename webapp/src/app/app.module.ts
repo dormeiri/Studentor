@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './components/home/home.component';
@@ -19,15 +19,20 @@ import { CreateAssignmentComponent } from './components/assignments/create-assig
 import { AuthInterceptor } from './services/auth.interceptor';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { LogoutComponent } from './components/logout/logout.component';
 import { UpdateAssignmentComponent } from './components/assignments/update-assignment/update-assignment.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { CreateCourseComponent } from './components/courses/create-course/create-course.component';
 import { UpdateCourseComponent } from './components/courses/update-course/update-course.component';
+import { ExamsComponent } from './components/exams/exams.component';
+import { CreateExamComponent } from './components/exams/create-exam/create-exam.component';
+import { UpdateExamComponent } from './components/exams/update-exam/update-exam.component';
+import { SelectCourseComponent } from './components/courses/select-course/select-course.component';
+import { TextInputComponent } from './components/basic-form/text-input/text-input.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, AssignmentsComponent, CreateAssignmentComponent, LogoutComponent, UpdateAssignmentComponent, CoursesComponent, CreateCourseComponent, UpdateCourseComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, AssignmentsComponent, CreateAssignmentComponent, LogoutComponent, UpdateAssignmentComponent, CoursesComponent, CreateCourseComponent, UpdateCourseComponent, ExamsComponent, CreateExamComponent, UpdateExamComponent, SelectCourseComponent, TextInputComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -52,4 +57,4 @@ import { UpdateCourseComponent } from './components/courses/update-course/update
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

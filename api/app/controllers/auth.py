@@ -12,10 +12,10 @@ from extensions import mongo
 from responses import ok
 
 
-auth_blueprint = Blueprint('/api/auth', __name__)
+auth_blueprint = Blueprint('/auth', __name__)
 
 
-@auth_blueprint.route('/api/auth/register', methods=['POST'])
+@auth_blueprint.route('/auth/register', methods=['POST'])
 def post_user():
     try:
         data = create_user_schema.load(request.get_json())
@@ -31,7 +31,7 @@ def post_user():
         abort(400)
 
 
-@auth_blueprint.route('/api/auth/login', methods=['POST'])
+@auth_blueprint.route('/auth/login', methods=['POST'])
 def login():
     try:
         data = login_schema.load(request.get_json())
@@ -47,13 +47,13 @@ def login():
         abort(400)
 
 
-@auth_blueprint.route('/api/auth/refresh', methods=['POST'])
+@auth_blueprint.route('/auth/refresh', methods=['POST'])
 @auth_refresh_required
 def refresh():
     return ok(refresh_authentication())
 
 
-@auth_blueprint.route('/api/auth/logout', methods=['POST'])
+@auth_blueprint.route('/auth/logout', methods=['POST'])
 @auth_required
 def logout():
     deauthenticate()
