@@ -1,11 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Exam } from 'src/app/models/exam.model';
 import { ExamsService } from 'src/app/services/exams.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Course } from 'src/app/models/course.model';
+import { CreateExamFormHelper } from './create-exam-form-helper';
 
 @Component({
   selector: 'app-create-exam',
@@ -14,47 +11,40 @@ import { Course } from 'src/app/models/course.model';
 })
 export class CreateExamComponent implements OnInit, OnDestroy {
 
-  showCreateCourse: Boolean;
+  formHelper: CreateExamFormHelper;
 
-  subs: Subscription;
-  data: Exam;
-  courses: Course[];
-  form: FormGroup;
 
   constructor(
-    private examsService: ExamsService,
-    private notifyService: NotifyService,
-    private formBuilder: FormBuilder) {
-  }
-
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
+    examsService: ExamsService,
+    notifyService: NotifyService,
+    formBuilder: FormBuilder) {
+    this.formHelper = new CreateExamFormHelper({
       title: ['', Validators.required],
       info: [''],
       date: [null],
       course_id: [null, Validators.required],
       grade: [null]
-    });
+    },
+      examsService,
+      notifyService,
+      formBuilder)
+  }
+
+
+  public get form(): FormGroup {
+    return this.formHelper.form;
+  }
+
+
+  ngOnInit(): void {
+    this.formHelper.init();
   }
 
   ngOnDestroy() {
-    this.subs?.unsubscribe();
+    this.formHelper.destroy();
   }
 
   onSubmit() {
-    if (this.form.invalid) {
-      return;
-    }
-
-    let values = this.form.value;
-    let entity = new Exam(values.course_id, values.date, values.title, values.info, values.grade);
-    this.subs = this.examsService.post(entity).subscribe(
-      () => {
-        this.notifyService.showSuccess('Exam created', 'Exam');
-      },
-      (err: HttpErrorResponse) => {
-        this.notifyService.showError(err.message, 'Exam');
-      }
-    );
+    this.formHelper.submit();
   }
 }

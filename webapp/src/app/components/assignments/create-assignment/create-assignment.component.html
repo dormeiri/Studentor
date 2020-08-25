@@ -1,34 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <app-select-course formControlName="course_id"></app-select-course>
-    <div class="form-row">
-        <div class="col form-group">
-            <label>Title</label>
-            <input type="text" formControlName="title" class="form-control" />
-            <div class="text-danger"
-                *ngIf="form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched)">
-                Invalid
-            </div>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="col form-group">
-            <label>Due</label>
-            <input type="text" formControlName="due" placeholder="Choose date" class="form-control" bsDatepicker>
-            <div class="text-danger"
-                *ngIf="form.controls['due'].invalid && (form.controls['due'].dirty || form.controls['due'].touched)">
-                Invalid
-            </div>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="col form-group">
-            <label>Info</label>
-            <input type="text" formControlName="info" class="form-control" />
-            <div class="text-danger"
-                *ngIf="form.controls['info'].invalid && (form.controls['info'].dirty || form.controls['info'].touched)">
-                Invalid
-            </div>
-        </div>
-    </div>
-    <button *ngIf="!showCreateCourse" class="btn btn-primary" type="submit" [disabled]="form.invalid">Create</button>
+    <app-text-input formControlName="title">Title</app-text-input>
+    <app-date-input formControlName="due">Due</app-date-input>
+    <app-text-input formControlName="info">Info</app-text-input>
+    <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Create</button>
 </form>

@@ -39,7 +39,7 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
   }
 
   deleteAssignment(item: Assignment) {
-    this.subs = this.assignmentsService.deleteAssignment(item._id).subscribe(
+    this.subs = this.assignmentsService.delete(item._id).subscribe(
       null,
       (err: HttpErrorResponse) => {
         this.notifyService.showError(err.message, "Delete Assignment");
@@ -47,7 +47,7 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
   }
 
   private loadAssignments() {
-    this.subs = this.assignmentsService.getAssignments().subscribe(
+    this.subs = this.assignmentsService.getAll().subscribe(
       (data: Assignment[]) => {
         this.data = data;
         this.setCourses();

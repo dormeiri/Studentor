@@ -19,7 +19,7 @@
                     <h3 class="card-title">{{item.course?.name}} / {{item.title}}</h3>
                     <p *ngIf="item.info" class="card-text">{{item.info}}</p>
                     <p *ngIf="item.date" class="card-text">
-                        <small class="text-muted">Due: {{item.date | date}}</small>
+                        <small class="text-muted">Date: {{item.date | date}}</small>
                     </p>
                     <p *ngIf="item.grade" class="card-text">
                         <small class="text-muted">Grade: {{item.grade}}</small>

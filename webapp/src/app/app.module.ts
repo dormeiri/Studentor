@@ -30,9 +30,11 @@ import { CreateExamComponent } from './components/exams/create-exam/create-exam.
 import { UpdateExamComponent } from './components/exams/update-exam/update-exam.component';
 import { SelectCourseComponent } from './components/courses/select-course/select-course.component';
 import { TextInputComponent } from './components/basic-form/text-input/text-input.component';
+import { DateInputComponent } from './components/basic-form/date-input/date-input.component';
+import { NumberInputComponent } from './components/basic-form/number-input/number-input.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, AssignmentsComponent, CreateAssignmentComponent, LogoutComponent, UpdateAssignmentComponent, CoursesComponent, CreateCourseComponent, UpdateCourseComponent, ExamsComponent, CreateExamComponent, UpdateExamComponent, SelectCourseComponent, TextInputComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, AssignmentsComponent, CreateAssignmentComponent, LogoutComponent, UpdateAssignmentComponent, CoursesComponent, CreateCourseComponent, UpdateCourseComponent, ExamsComponent, CreateExamComponent, UpdateExamComponent, SelectCourseComponent, TextInputComponent, DateInputComponent, NumberInputComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

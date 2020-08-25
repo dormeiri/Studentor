@@ -1,7 +1,7 @@
 import { Course } from './course.model';
+import { BaseCrudModel } from './base-crud-model';
 
-export class Assignment {
-    _id: String;
+export class Assignment extends BaseCrudModel {
     user_id: String;
     course_id: String;
     due: Date;
@@ -10,6 +10,7 @@ export class Assignment {
     course: Course;
 
     constructor(course_id: String, due: Date, title: String, info: String) {
+        super();
         this.course_id = course_id;
         this.due = due;
         this.title = title;

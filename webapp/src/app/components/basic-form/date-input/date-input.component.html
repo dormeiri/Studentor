@@ -1,0 +1,10 @@
+<div class="form-row">
+    <div class="col form-group">
+        <label><ng-content></ng-content></label>
+        <input type="text" [formControl]="ngControl.control" placeholder="Choose date" class="form-control"
+            bsDatepicker>
+        <div class="text-danger" *ngIf="ngControl.touched && ngControl.invalid">
+            Invalid
+        </div>
+    </div>
+</div>
