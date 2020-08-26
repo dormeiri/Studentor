@@ -4,7 +4,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
-  styleUrls: ['./number-input.component.css']
+  styleUrls: ['./number-input.component.scss']
 })
 export class NumberInputComponent implements ControlValueAccessor {
 

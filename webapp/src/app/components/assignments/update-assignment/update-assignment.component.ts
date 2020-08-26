@@ -7,7 +7,7 @@ import { UpdateAssignmentFormHelper } from './update-assignment-form-helper';
 @Component({
   selector: 'app-update-assignment',
   templateUrl: './update-assignment.component.html',
-  styleUrls: ['./update-assignment.component.css']
+  styleUrls: ['./update-assignment.component.scss']
 })
 export class UpdateAssignmentComponent implements OnInit, OnDestroy {
 

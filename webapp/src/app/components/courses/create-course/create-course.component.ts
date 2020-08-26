@@ -10,7 +10,7 @@ import { CreateCourseFormHelper } from './create-course-form-helper';
 @Component({
   selector: 'app-create-course',
   templateUrl: './create-course.component.html',
-  styleUrls: ['./create-course.component.css']
+  styleUrls: ['./create-course.component.scss']
 })
 export class CreateCourseComponent implements OnInit, OnDestroy {
 

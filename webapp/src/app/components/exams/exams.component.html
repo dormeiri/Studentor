@@ -13,23 +13,8 @@
         </div>
         <div class="col-md-5 order-md-1">
             <h2>My Exams</h2>
-            <div *ngFor="let item of data" class="card mb-3" [class.border-primary]="updateId == item._id"
-                (click)="updateId = item._id">
-                <div class="card-body">
-                    <h3 class="card-title">{{item.course?.name}} / {{item.title}}</h3>
-                    <p *ngIf="item.info" class="card-text">{{item.info}}</p>
-                    <p *ngIf="item.date" class="card-text">
-                        <small class="text-muted">Date: {{item.date | date}}</small>
-                    </p>
-                    <p *ngIf="item.grade" class="card-text">
-                        <small class="text-muted">Grade: {{item.grade}}</small>
-                    </p>
-                    <div class="exam-controllers">
-                        <button (click)="deleteExam(item)"
-                            class="btn btn-danger btn-sm exam-controller">Delete</button>
-                    </div>
-                </div>
-            </div>
+            <app-card *ngFor="let item of cardItems" [data]="item" [isMarked]="updateId == item.value"
+                (click)="updateId = item.value" (action)="deleteExam(item.value)"></app-card>
         </div>
     </div>
 </div>

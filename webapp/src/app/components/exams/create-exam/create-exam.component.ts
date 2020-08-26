@@ -7,7 +7,7 @@ import { CreateExamFormHelper } from './create-exam-form-helper';
 @Component({
   selector: 'app-create-exam',
   templateUrl: './create-exam.component.html',
-  styleUrls: ['./create-exam.component.css']
+  styleUrls: ['./create-exam.component.scss']
 })
 export class CreateExamComponent implements OnInit, OnDestroy {
 

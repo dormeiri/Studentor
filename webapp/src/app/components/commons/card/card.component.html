@@ -1,0 +1,13 @@
+<div class="card mb-3" [class.border-primary]="isMarked">
+    <div class="card-body">
+        <h3 class="card-title">{{data.title}}</h3>
+        <p *ngFor="let infoItem of data.info" class="card-text">{{infoItem}}</p>
+        <p *ngFor="let infoItem of data.smallInfo" class="card-text card-small"><small>{{infoItem}}</small></p>
+        <div class="controllers">
+            <button (click)="callAction()" class="btn btn-sm"
+                [class.btn-danger]="data.actionItem.type == 'danger'" [class.btn-primary]="data.actionItem.type == 'primary'">
+                {{data.actionItem.text}}
+            </button>
+        </div>
+    </div>
+</div>

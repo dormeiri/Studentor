@@ -5,7 +5,7 @@
             <button class="btn btn-outline-secondary btn-sm ml-2"
                 (click)="showCreateCourse=!showCreateCourse">{{showCreateCourse ? '-' : 'Add'}}</button>
         </label>
-        <div class="card bg-light" *ngIf="showCreateCourse">
+        <div class="card" *ngIf="showCreateCourse">
             <div class="card-body">
                 <app-create-course></app-create-course>
             </div>

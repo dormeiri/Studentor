@@ -1,0 +1,38 @@
+@import "variables";
+
+$body-bg: $background;
+$body-color: $accent;
+
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+.mat-drawer-container, .mat-drawer {
+    background-color: $background;
+    color: $primary;
+}
+
+.navbar-brand, .navbar-toggler {
+    color: $primary;
+}
+
+html, body { height: 100%; }
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.form-control, .form-control:focus {
+    background-color: transparent;
+    color: $primary;
+}
+
+option {
+    background-color: $background;
+}
+
+.card {
+    cursor: pointer;
+    transition: background-color 150ms;
+    background-color: rgba($primary, 0.05);
+}
+
+.card .card-small {
+    color: $accent;
+}

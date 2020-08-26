@@ -1,6 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Assignment } from 'src/app/models/assignment.model';
 import { AssignmentsService } from 'src/app/services/assignments.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -9,7 +7,7 @@ import { CreateAssignmentFormHelper } from './create-assignment-form-helper';
 @Component({
   selector: 'app-create-assignment',
   templateUrl: './create-assignment.component.html',
-  styleUrls: ['./create-assignment.component.css']
+  styleUrls: ['./create-assignment.component.scss']
 })
 export class CreateAssignmentComponent implements OnInit, OnDestroy {
 

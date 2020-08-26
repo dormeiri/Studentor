@@ -1,5 +1,5 @@
 <mat-sidenav-container [hasBackdrop]="true" fullscreen>
-  <mat-sidenav #sidenav class="bg-dark sidenav" mode="over" [(opened)]="opened" [fixedInViewport]="true" position="end">
+  <mat-sidenav #sidenav class="sidenav" mode="over" [(opened)]="opened" [fixedInViewport]="true" position="end">
     <ul class="list-unstyled" *ngIf="isReady">
       <li *ngFor="let item of filteredMenuItems">
         <a [routerLink]="item.route">{{item.name}}</a>
@@ -7,7 +7,7 @@
     </ul>
   </mat-sidenav>
   <mat-sidenav-content>
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark">
       <a class="navbar-brand" href="#">Studentor</a>
       <button class="navbar-toggler" type="button" (click)="sidenav.toggle()">
         <span class="navbar-toggler-icon"></span>

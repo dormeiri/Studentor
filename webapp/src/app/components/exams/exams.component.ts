@@ -6,11 +6,13 @@ import { NotifyService } from 'src/app/services/notify.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CoursesService } from 'src/app/services/courses.service';
 import { Course } from 'src/app/models/course.model';
+import { CardItem } from 'src/app/models/common-card/card-item.model';
+import { CardActionItem } from 'src/app/models/common-card/card-action-item.model';
 
 @Component({
   selector: 'app-exams',
   templateUrl: './exams.component.html',
-  styleUrls: ['./exams.component.css']
+  styleUrls: ['./exams.component.scss']
 })
 export class ExamsComponent implements OnInit, OnDestroy {
 
@@ -19,6 +21,7 @@ export class ExamsComponent implements OnInit, OnDestroy {
   coursesSubs: Subscription;
   data: Exam[];
   courses: Course[];
+  cardItems: CardItem[];
 
   constructor(
     private examsService: ExamsService,
@@ -38,8 +41,8 @@ export class ExamsComponent implements OnInit, OnDestroy {
     this.coursesSubs?.unsubscribe();
   }
 
-  deleteExam(item: Exam) {
-    this.subs = this.examsService.delete(item._id).subscribe(
+  public deleteExam(id: String) {
+    this.subs = this.examsService.delete(id).subscribe(
       null,
       (err: HttpErrorResponse) => {
         this.notifyService.showError(err.message, "Delete Exam");
@@ -51,6 +54,7 @@ export class ExamsComponent implements OnInit, OnDestroy {
       (data: Exam[]) => {
         this.data = data;
         this.setCourses();
+        this.setCardItems();
       },
       (err: HttpErrorResponse) => {
         this.notifyService.showError(err.message, "Get Exams");
@@ -74,5 +78,19 @@ export class ExamsComponent implements OnInit, OnDestroy {
         exam.course = this.courses.find(course => course._id == exam.course_id);
       });
     }
+  }
+
+  private setCardItems() {
+    this.cardItems = this.data?.map(this.mapCardItem);
+  }
+
+  private mapCardItem(value: Exam): CardItem {
+    return new CardItem(
+      value._id,
+      `${value.course?.name} / ${value.title}`,
+      [value.info],
+      [!value.date ? null : new Date(value.date).toDateString(),
+      value.grade ? `Grade: ${value.grade.toString()}` : null],
+      new CardActionItem('Delete', 'danger'));
   }
 }

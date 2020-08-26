@@ -7,7 +7,7 @@ import { UpdateExamFormHelper } from './update-exam-form-helper';
 @Component({
   selector: 'app-update-exam',
   templateUrl: './update-exam.component.html',
-  styleUrls: ['./update-exam.component.css']
+  styleUrls: ['./update-exam.component.scss']
 })
 export class UpdateExamComponent implements OnInit, OnDestroy {
 

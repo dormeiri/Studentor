@@ -6,11 +6,13 @@ import { NotifyService } from 'src/app/services/notify.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CoursesService } from 'src/app/services/courses.service';
 import { Course } from 'src/app/models/course.model';
+import { CardItem } from 'src/app/models/common-card/card-item.model';
+import { CardActionItem } from 'src/app/models/common-card/card-action-item.model';
 
 @Component({
   selector: 'app-assignments',
   templateUrl: './assignments.component.html',
-  styleUrls: ['./assignments.component.css']
+  styleUrls: ['./assignments.component.scss']
 })
 export class AssignmentsComponent implements OnInit, OnDestroy {
 
@@ -19,6 +21,7 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
   coursesSubs: Subscription;
   data: Assignment[];
   courses: Course[];
+  cardItems: CardItem[];
 
   constructor(
     private assignmentsService: AssignmentsService,
@@ -38,8 +41,8 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
     this.coursesSubs?.unsubscribe();
   }
 
-  deleteAssignment(item: Assignment) {
-    this.subs = this.assignmentsService.delete(item._id).subscribe(
+  public deleteAssignment(id: String) {
+    this.subs = this.assignmentsService.delete(id).subscribe(
       null,
       (err: HttpErrorResponse) => {
         this.notifyService.showError(err.message, "Delete Assignment");
@@ -51,6 +54,7 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
       (data: Assignment[]) => {
         this.data = data;
         this.setCourses();
+        this.setCardItems();
       },
       (err: HttpErrorResponse) => {
         this.notifyService.showError(err.message, "Get Assignments");
@@ -74,5 +78,18 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
         assignment.course = this.courses.find(course => course._id == assignment.course_id);
       });
     }
+  }
+
+  private setCardItems() {
+    this.cardItems = this.data?.map(this.mapCardItem);
+  }
+
+  private mapCardItem(value: Assignment): CardItem {
+    return new CardItem(
+      value._id,
+      `${value.course?.name ?? null} / ${value.title}`,
+      [value.info],
+      [!value.due ? null : new Date(value.due).toDateString()],
+      new CardActionItem('Delete', 'danger'));
   }
 }
