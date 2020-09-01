@@ -1,20 +1,28 @@
-from marshmallow import fields
-from models.model import BaseSchema
+from models.base import ModelSchema
+from models.course import Course
+from models.user import User
+from mongoengine import (
+    DateField, StringField, IntField,
+    ReferenceField, Document, BooleanField, CASCADE
+)
 
 
-class CreateAssignmentSchema(BaseSchema):
-    course_id = fields.Str(required=True)
-    due = fields.DateTime(allow_none=True)
-    title = fields.Str(required=True)
-    info = fields.Str()
+# Model
+
+class Assignment(Document):
+    title = StringField(max_length=50)
+    date = DateField()
+    grade = IntField(min_value=0, max_value=100)
+    course = ReferenceField(Course, reverse_delete_rule=CASCADE)
+    owner = ReferenceField(User, reverse_delete_rule=CASCADE)
+    is_exam = BooleanField()
+    info = StringField()
 
 
-class UpdateAssignmentSchema(BaseSchema):
-    _id = fields.Str(required=True)
-    due = fields.DateTime(allow_none=True)
-    title = fields.Str(required=True)
-    info = fields.Str()
+# Schemas
+
+class AssignmentSchema(ModelSchema):
+    model = Assignment
 
 
-create_assignment_schema = CreateAssignmentSchema()
-update_assignment_schema = UpdateAssignmentSchema()
+assignment_schema = AssignmentSchema()

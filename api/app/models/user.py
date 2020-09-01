@@ -1,30 +1,22 @@
-from marshmallow import fields
-from models.model import BaseSchema
+from models.base import ModelSchema, Field
+from mongoengine import EmailField, StringField, ListField, Document
 
 
-class LoginSchema(BaseSchema):
-    email = fields.Email(required=True)
-    password = fields.Str(required=True)
+# Model
+
+class User(Document):
+    email = EmailField(required=True, unique=True, null=False)
+    password = StringField(required=True, null=False)
+    first_name = StringField(max_length=100, required=True, null=False)
+    last_name = StringField(max_length=100, required=True, null=False)
+    roles = ListField(StringField(max_length=50))
 
 
-class UpdateUserSchema(BaseSchema):
-    password = fields.Str()
-    first_name = fields.Str()
-    last_name = fields.Str()
-    roles = fields.List(fields.Str)
-    courses = fields.List(fields.Str)
+# Schemas
+
+class UserSchema(ModelSchema):
+    model = User
+    password = Field(load_only=True)
 
 
-class CreateUserSchema(BaseSchema):
-    email = fields.Str(required=True)
-    password = fields.Str(required=True)
-    first_name = fields.Str(required=True)
-    last_name = fields.Str(required=True)
-    created_at = fields.DateTime(dumps_only=True)
-    roles = fields.List(fields.Str, required=True)
-    courses = fields.List(fields.Str, dumps_only=True)
-
-
-login_schema = LoginSchema()
-create_user_schema = CreateUserSchema()
-update_user_schema = UpdateUserSchema()
+user_schema = UserSchema()

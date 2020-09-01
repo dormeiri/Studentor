@@ -1,17 +1,22 @@
-from marshmallow import fields
-from models.model import BaseSchema
+from models.base import ModelSchema
+from models.user import User
+from mongoengine import (
+    StringField, ReferenceField, Document, CASCADE
+)
 
 
-class CreateCourseSchema(BaseSchema):
-    name = fields.Str(required=True)
-    info = fields.Str()
+# Model
+
+class Course(Document):
+    name = StringField(max_length=200, required=True, null=False)
+    info = StringField(required=False)
+    owner = ReferenceField(User, reverse_delete_rule=CASCADE)
 
 
-class UpdateCourseSchema(BaseSchema):
-    _id = fields.Str(required=True)
-    name = fields.Str(required=True)
-    info = fields.Str()
+# Schemas
+
+class CourseSchema(ModelSchema):
+    model = Course
 
 
-create_course_schema = CreateCourseSchema()
-update_course_schema = UpdateCourseSchema()
+course_schema = CourseSchema()

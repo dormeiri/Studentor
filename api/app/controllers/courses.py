@@ -1,87 +1,56 @@
-from marshmallow import ValidationError
-from flask import request, Blueprint, abort
-from dataaccess.auth import (
-    get_authenticated_user, auth_required, exposed, get_my
-)
-from extensions import context
-from responses import ok
-from models.course import create_course_schema, update_course_schema
+from flask import Blueprint, request
+from services.data_set import courses
+from services.auth import auth_required, get_authenticated_user
+from services.responses import not_found, ok
+
+courses_blueprint = Blueprint('/courses', __name__, url_prefix='/courses')
 
 
-courses_blueprint = Blueprint('/courses', __name__)
-
-
-@courses_blueprint.route('/courses/<id>', methods=['GET'])
-@auth_required
+@courses_blueprint.route('/<id>', methods=['GET'])
+@auth_required()
 def get_course(id):
-    course = context.courses.find(id)
+    course = courses.context().get(id)
 
     if not course:
-        abort(404)
+        return not_found()
 
-    if not exposed(course, 'admin'):
-        abort(403)
-
-    return ok(course)
+    return ok(courses.schema.dump(course))
 
 
-@courses_blueprint.route('/courses', methods=['GET'])
-@auth_required
+@courses_blueprint.route('', methods=['GET'])
+@auth_required()
 def get_courses():
-    courses = get_my(context.courses)
+    courses_list = courses.context().get()
 
-    return ok(list(courses))
+    return ok(courses.schema.dump(courses_list))
 
 
-@courses_blueprint.route('/courses', methods=['POST'])
-@auth_required
+@courses_blueprint.route('', methods=['POST'])
+@auth_required()
 def post_course():
-    try:
-        data = create_course_schema.load(request.get_json())
+    data = courses.schema.load(request.get_json())
+    data.owner = get_authenticated_user()
 
-        user = get_authenticated_user()
-        data['user_id'] = user['_id']
+    course = courses.context().create(data)
 
-        context.courses.create(data)
-
-        return ok()
-    except ValidationError:
-        abort(400)
+    return ok(courses.schema.dump(course))
 
 
-@courses_blueprint.route('/courses', methods=['PUT'])
-@auth_required
-def put_course():
-    try:
-        data = update_course_schema.load(request.get_json())
-        id = data.pop('_id')
+@courses_blueprint.route('/<id>', methods=['PUT'])
+@auth_required()
+def put_course(id):
+    data = courses.context().update(id, request.get_json())
 
-        old = context.courses.find(id)
+    if not data:
+        return not_found()
 
-        if not old:
-            abort(400)
-
-        if not exposed(old, 'admin'):
-            abort(403)
-
-        context.courses.update(id, data)
-
-        return ok()
-    except ValidationError:
-        abort(400)
+    return ok(courses.schema.dump(data))
 
 
-@courses_blueprint.route('/courses/<id>', methods=['DELETE'])
-@auth_required
+@courses_blueprint.route('/<id>', methods=['DELETE'])
+@auth_required()
 def delete_user(id):
-    course = context.courses.find(id)
-
-    if not course:
-        abort(404)
-
-    if not exposed(course, 'admin'):
-        abort(403)
-
-    context.courses.delete(id)
+    if not courses.context().delete(id):
+        return not_found()
 
     return ok()

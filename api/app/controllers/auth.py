@@ -1,60 +1,60 @@
-import datetime
-from marshmallow import ValidationError
-from flask import request, Blueprint, abort
-from models.user import login_schema, create_user_schema
-from dataaccess.auth import (
-    authenticate, deauthenticate, refresh_authentication,
-    auth_required, auth_refresh_required,
-    AuthenticationError
+from mongoengine import ValidationError, NotUniqueError
+from flask import request, Blueprint
+from models.user import user_schema
+from services.auth import (
+    authenticate, refresh_authentication, auth_required, AuthenticationError
 )
 from werkzeug.security import generate_password_hash
-from extensions import mongo
-from responses import ok
+from services.responses import ok, bad_request, json_response
 
 
-auth_blueprint = Blueprint('/auth', __name__)
+auth_blueprint = Blueprint('/auth', __name__, url_prefix='/auth')
 
 
-@auth_blueprint.route('/auth/register', methods=['POST'])
-def post_user():
+@auth_blueprint.route('/register', methods=['POST'])
+def register():
     try:
-        data = create_user_schema.load(request.get_json())
-        if mongo.db.users.find_one({'email': data['email']}):
-            return abort(409)
+        json = request.get_json()
 
-        data['created_at'] = datetime.datetime.utcnow()
-        data['password'] = generate_password_hash(data['password'])
-        mongo.db.users.insert_one(data)
+        if 'password' in json:
+            json['password'] = generate_password_hash(json['password'])
 
-        return ok()
-    except ValidationError:
-        abort(400)
+        user = user_schema.load(json).save()
+
+        return ok(user_schema.dump(user))
+
+    except ValidationError as err:
+        return bad_request(err.to_dict())
+
+    except NotUniqueError:
+        return bad_request('User already exists')
 
 
-@auth_blueprint.route('/auth/login', methods=['POST'])
+@auth_blueprint.route('/login', methods=['POST'])
 def login():
     try:
-        data = login_schema.load(request.get_json())
-        access_token, refresh_token = authenticate(data)
+        data = request.get_json()
 
-        return ok({
-            'access_token': access_token,
-            'refresh_token': refresh_token
-        })
-    except AuthenticationError as e:
-        return abort(e.code)
-    except ValidationError:
-        abort(400)
+        email = data.get('email')
+        password = data.get('password')
+
+        return ok(authenticate(email, password))
+
+    except AuthenticationError as err:
+        return json_response(None, err.code)
+
+    except ValidationError as err:
+        return bad_request(err.to_dict())
 
 
-@auth_blueprint.route('/auth/refresh', methods=['POST'])
-@auth_refresh_required
+@ auth_blueprint.route('/refresh', methods=['POST'])
+@ auth_required(refresh=True)
 def refresh():
     return ok(refresh_authentication())
 
 
-@auth_blueprint.route('/auth/logout', methods=['POST'])
-@auth_required
+@ auth_blueprint.route('/logout', methods=['POST'])
+@ auth_required()
 def logout():
-    deauthenticate()
+    # TODO: Revoke token
     return ok()
