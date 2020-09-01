@@ -2,18 +2,25 @@ import { Course } from './course.model';
 import { BaseCrudModel } from './base-crud-model';
 
 export class Assignment extends BaseCrudModel {
-    user_id: String;
-    course_id: String;
-    due: Date;
     title: String;
+    grade: Number;
+    date: Date;
     info: String;
-    course: Course;
+    course: String;
+    course_data: Course;
 
-    constructor(course_id: String, due: Date, title: String, info: String) {
+    constructor(
+        title: String,
+        grade: Number,
+        date: Date,
+        info: String,
+        course: String,
+    ) {
         super();
-        this.course_id = course_id;
-        this.due = due;
         this.title = title;
+        this.grade = grade;
+        this.date = date;
         this.info = info;
+        this.course = course;
     }
 }

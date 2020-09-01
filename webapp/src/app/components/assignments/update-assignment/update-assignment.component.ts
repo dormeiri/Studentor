@@ -29,8 +29,9 @@ export class UpdateAssignmentComponent implements OnInit, OnDestroy {
     formBuilder: FormBuilder) {
     this.formHelper = new UpdateAssignmentFormHelper({
       title: ['', Validators.required],
-      info: [''],
-      due: [null]
+      date: [null],
+      grade: [null],
+      info: ['']
     },
       assignmentsService,
       notifyService,

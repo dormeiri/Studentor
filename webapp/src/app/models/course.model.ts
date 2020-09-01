@@ -1,10 +1,12 @@
-export class Course {
-    _id: String;
-    user_id: String;
+import { BaseCrudModel } from './base-crud-model';
+
+export class Course extends BaseCrudModel {
     name: String;
     info: String;
+    owner: String;
 
-    constructor(name: String, info: String) {
+    public constructor(name: String, info: String) {
+        super();
         this.name = name;
         this.info = info;
     }

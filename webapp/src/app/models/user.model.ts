@@ -1,11 +1,19 @@
-export class User {
+import { BaseCrudModel } from './base-crud-model';
+
+export class User extends BaseCrudModel {
     email: String;
     password: String;
     first_name: String;
     last_name: String;
     roles: String[];
 
-    constructor(email, password, first_name, last_name) {
+    constructor(
+        email: String,
+        password: String,
+        first_name: String,
+        last_name: String
+    ) {
+        super();
         this.email = email;
         this.password = password;
         this.first_name = first_name;

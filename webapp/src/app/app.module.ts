@@ -25,9 +25,6 @@ import { UpdateAssignmentComponent } from './components/assignments/update-assig
 import { CoursesComponent } from './components/courses/courses.component';
 import { CreateCourseComponent } from './components/courses/create-course/create-course.component';
 import { UpdateCourseComponent } from './components/courses/update-course/update-course.component';
-import { ExamsComponent } from './components/exams/exams.component';
-import { CreateExamComponent } from './components/exams/create-exam/create-exam.component';
-import { UpdateExamComponent } from './components/exams/update-exam/update-exam.component';
 import { SelectCourseComponent } from './components/courses/select-course/select-course.component';
 import { TextInputComponent } from './components/basic-form/text-input/text-input.component';
 import { DateInputComponent } from './components/basic-form/date-input/date-input.component';
@@ -35,7 +32,7 @@ import { NumberInputComponent } from './components/basic-form/number-input/numbe
 import { CardComponent } from './components/commons/card/card.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, AssignmentsComponent, CreateAssignmentComponent, LogoutComponent, UpdateAssignmentComponent, CoursesComponent, CreateCourseComponent, UpdateCourseComponent, ExamsComponent, CreateExamComponent, UpdateExamComponent, SelectCourseComponent, TextInputComponent, DateInputComponent, NumberInputComponent, CardComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, HomeComponent, AssignmentsComponent, CreateAssignmentComponent, LogoutComponent, UpdateAssignmentComponent, CoursesComponent, CreateCourseComponent, UpdateCourseComponent, SelectCourseComponent, TextInputComponent, DateInputComponent, NumberInputComponent, CardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -36,13 +36,15 @@ export class UpdateAssignmentFormHelper extends BaseFormHelper<Assignment> {
 
     private setFormFromData(): void {
         this.form.controls['title'].setValue(this.data.title);
+        this.form.controls['date'].setValue(!this.data.date ? null : new Date(this.data.date));
+        this.form.controls['grade'].setValue(this.data.grade);
         this.form.controls['info'].setValue(this.data.info);
-        this.form.controls['due'].setValue(!this.data.due ? null : new Date(this.data.due));
     }
 
     private setDataFromForm(): void {
         this.data.title = this.form.value.title;
+        this.data.date = this.form.value.date;
+        this.data.grade = this.form.value.grade;
         this.data.info = this.form.value.info;
-        this.data.due = this.form.value.due;
     }
 }

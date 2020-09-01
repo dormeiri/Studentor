@@ -8,9 +8,9 @@ export class CreateAssignmentFormHelper extends BaseFormHelper<Assignment> {
         }
 
         let values = this.form.value;
-        let entity = new Assignment(values.course_id, values.due, values.title, values.info);
-        if(!entity.due) {
-            entity.due = null;
+        let entity = new Assignment(values.title, values.grade, values.date, values.info, values.course);
+        if (!entity.date) {
+            entity.date = null;
         }
         this.subs = this.crudService.post(entity).subscribe(
             (data) => {

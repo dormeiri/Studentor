@@ -13,37 +13,37 @@ export class AuthService {
 
   private loginStateChangedSource = new Subject<boolean>();
 
-  loginStateChanged$ = this.loginStateChangedSource.asObservable();
+  public loginStateChanged$ = this.loginStateChangedSource.asObservable();
 
-  constructor(protected http: HttpClient) { }
+  public constructor(protected http: HttpClient) { }
 
-  register(user: User): Observable<any> {
+  public register(user: User): Observable<any> {
     return this.http.post(`${environment.apiUrl}/auth/register`, user);
   }
 
-  login(login: Login): Observable<any> {
+  public login(login: Login): Observable<any> {
     return this.http.post(`${environment.apiUrl}/auth/login`, login);
   }
 
-  logout(): Observable<any> {
+  public logout(): Observable<any> {
     return this.http.post(`${environment.apiUrl}/auth/logout`, '');
   }
 
-  storeTokens(tokens: any): void {
+  public storeTokens(tokens: any): void {
     localStorage.setItem('access_token', tokens.access_token);
     localStorage.setItem('refresh_token', tokens.refresh_token);
 
     this.loginStateChangedSource.next(true);
   }
 
-  removeTokens(): void {
+  public removeTokens(): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
 
     this.loginStateChangedSource.next(false);
   }
 
-  getToken(): string {
+  public getToken(): string {
     return localStorage.getItem('access_token');
   }
 }

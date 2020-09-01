@@ -75,7 +75,7 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
   private setCourses() {
     if (this.data && this.courses) {
       this.data.forEach(assignment => {
-        assignment.course = this.courses.find(course => course._id == assignment.course_id);
+        assignment.course_data = this.courses.find(course => course._id == assignment.course);
       });
     }
   }
@@ -87,9 +87,12 @@ export class AssignmentsComponent implements OnInit, OnDestroy {
   private mapCardItem(value: Assignment): CardItem {
     return new CardItem(
       value._id,
-      `${value.course?.name ?? null} / ${value.title}`,
+      `${value.course_data?.name ?? null} / ${value.title}`,
       [value.info],
-      [!value.due ? null : new Date(value.due).toDateString()],
+      [
+        !value.date ? null : new Date(value.date).toDateString(),
+        value.grade == null ? null : value.grade.toString()
+      ],
       new CardActionItem('Delete', 'danger'));
   }
 }

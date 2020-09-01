@@ -31,7 +31,7 @@ export class BaseCrudService<T extends BaseCrudModel> {
     }
 
     public put(data: T): Observable<any> {
-        return this.http.put(this.baseUrl, data)
+        return this.http.put(`${this.baseUrl}/${data._id}`, data)
             .pipe(tap(() => this.dataUpdatedSource.next()));
     }
 

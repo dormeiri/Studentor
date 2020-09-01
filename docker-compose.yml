@@ -12,7 +12,6 @@ services:
   webapp:
     build: webapp
   api:
-    env_file: api/.env
     build: api
     depends_on:
       - db

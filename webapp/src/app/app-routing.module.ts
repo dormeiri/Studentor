@@ -7,7 +7,6 @@ import { AssignmentsComponent } from './components/assignments/assignments.compo
 import { LogoutComponent } from './components/logout/logout.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CoursesComponent } from './components/courses/courses.component';
-import { ExamsComponent } from './components/exams/exams.component';
 
 
 const routes: Routes = [
@@ -41,11 +40,6 @@ const routes: Routes = [
     component: CoursesComponent,
     canActivate: [EnsureAuthenticatedService]
   },
-  {
-    path: 'exams',
-    component: ExamsComponent,
-    canActivate: [EnsureAuthenticatedService]
-  }
 ];
 
 @NgModule({

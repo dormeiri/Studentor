@@ -20,9 +20,10 @@ export class CreateAssignmentComponent implements OnInit, OnDestroy {
     formBuilder: FormBuilder) {
     this.formHelper = new CreateAssignmentFormHelper({
       title: ['', Validators.required],
+      date: [null],
+      grade: [null],
       info: [''],
-      due: [null],
-      course_id: ['', Validators.required]
+      course: ['', Validators.required]
     },
       assignmentsService,
       notifyService,

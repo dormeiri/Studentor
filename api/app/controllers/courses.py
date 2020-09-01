@@ -39,12 +39,12 @@ def post_course():
 @courses_blueprint.route('/<id>', methods=['PUT'])
 @auth_required()
 def put_course(id):
-    data = courses.context().update(id, request.get_json())
+    course = courses.context().update(id, request.get_json())
 
-    if not data:
+    if not course:
         return not_found()
 
-    return ok(courses.schema.dump(data))
+    return ok(courses.schema.dump(course))
 
 
 @courses_blueprint.route('/<id>', methods=['DELETE'])

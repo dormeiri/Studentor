@@ -27,7 +27,8 @@ class DataSet:
             return None
 
         for key, value in payload.items():
-            document[key] = value
+            if key not in ('_id', self.schema.owner_key):
+                document[key] = value
 
         return document.save()
 
